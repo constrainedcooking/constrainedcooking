@@ -1,0 +1,16 @@
+{
+  "defaultAccounts": [
+    { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
+    { "email": "john@foo.com", "password": "changeme" }],
+  "defaultContacts": [
+    { "firstName": "Philip", "lastName": "Johnson", "address": "POST 307",
+      "image": "https://philipmjohnson.github.io/images/philip2.jpeg", "owner": "john@foo.com",
+      "description": "I am a Professor of Information and Computer Sciences at the University of Hawaii." },
+    { "firstName": "Henri",  "lastName": "Casanova", "address": "POST 307, University of Hawaii",
+      "image": "https://avatars0.githubusercontent.com/u/7494478?s=460&v=4",  "owner": "john@foo.com",
+      "description": "I am originally from France." }],
+  "galaxy.meteor.com": {
+    "env": {
+      "MONGO_URL": "mongodb://Cristina McLaughlin:RanGerQ12.@ds139919.mlab.com:39919/constrainedcookingdb"
+    }
+  }
