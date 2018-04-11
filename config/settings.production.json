@@ -11,6 +11,7 @@
       "description": "I am originally from France." }],
   "galaxy.meteor.com": {
     "env": {
-      "MONGO_URL": 
+      "MONGO_URL": "mongodb://bobby:flay@ds014388.mlab.com:14388/constrainedcooking"
     }
   }
+}
