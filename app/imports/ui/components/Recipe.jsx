@@ -7,7 +7,7 @@ import { withRouter, Link } from 'react-router-dom';
 class Recipe extends React.Component {
   render() {
     return (
-        <Link to={`/viewrecipe/${this.props.recipe._id}`}>
+        //<Link to={`/viewrecipe/${this.props.recipe._id}`}>
         <Card centered>
           <Image src={this.props.recipe.image} />
           <Card.Content>
@@ -22,7 +22,7 @@ class Recipe extends React.Component {
             {this.props.recipe.tag}
           </Card.Content>
         </Card>
-        </Link>
+        //</Link>
     );
   }
 }
