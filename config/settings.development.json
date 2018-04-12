@@ -1,7 +1,9 @@
 {
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
-    { "email": "john@foo.com", "password": "changeme" }
+    { "email": "john@foo.com", "password": "changeme" },
+    { "email": "aidana@hawaii.edu", "password": "a"},
+    { "email": "sakai@hawaii.edu", "password": "b"}
   ],
 
   "defaultData": [
@@ -9,5 +11,33 @@
     { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
     { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
     { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
+  ],
+
+  "defaultUsers": [
+    {
+      "userName": "Dog_the_bount_hunter", "firstName": "Bobby", "lastName": "Flay",
+      "image": "https://food.fnr.sndimg.com/content/dam/images/food/editorial/talent/bobby-flay/FN-TalentAvatar-Bobby-Flay-800x800.jpg.rend.hgtvcom.616.616.suffix/1458077863338.jpeg",
+      "restrictions": "none",
+      "owner" : "aidana@hawaii.edu"
+    },
+    {
+      "userName": "Jack_Sparrow", "firstName": "Hiroyuki", "lastName": "Sakai",
+      "image": "https://philipmjohnson.github.io/images/philip2.jpeg",
+      "restrictions": "none",
+      "owner" : "sakai@hawaii.edu"
+    },
+    {
+      "userName": "greg_house", "firstName": "greg", "lastName": "house",
+      "image": "http://ironchefallstars.com/wp-content/uploads/2017/06/c2-1.jpg",
+      "restrictions": "vegan",
+      "owner" : "john@foo.com"
+    },
+    {
+      "userName": "bird", "firstName": "jack", "lastName": "sparrow",
+      "image": "https://avatars0.githubusercontent.com/u/7494478?s=460&v=4",
+      "restrictions": "kosher",
+      "owner" : "admin@foo.com"
+    }
+
   ]
 }
