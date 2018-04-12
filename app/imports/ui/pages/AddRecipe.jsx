@@ -1,5 +1,5 @@
 import React from 'react';
-import { Recipe, RecipeSchema } from '/imports/api/recipe/recipe';
+import { Recipes, RecipeSchema } from '/imports/api/recipe/recipe';
 import { Grid, Segment, Header, Button, Form, TextArea } from 'semantic-ui-react';
 import AutoForm from 'uniforms-semantic/AutoForm';
 import TextField from 'uniforms-semantic/TextField';
@@ -28,6 +28,7 @@ class AddRecipe extends React.Component {
     };
   }
 
+  nonEmptySpace = {"some":"things"};
   /** Notify the user of the results of the submit. If successful, clear the form. */
   insertCallback(error) {
     if (error) {
@@ -115,10 +116,10 @@ class AddRecipe extends React.Component {
 
   /** On submit, insert the data. */
   submit(data) {
-    const { name, description } = data;
+    const { name, image, description } = data;
     const { ingredients, equipment, directions } = this.state;
     const creator = Meteor.user().username;
-    Recipes.insert({ name, description, ingredients, equipment, directions, creator }, this.insertCallback);
+    Recipes.insert({ name, image, description, ingredients, equipment, directions, creator }, this.insertCallback);
   }
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
@@ -130,6 +131,7 @@ class AddRecipe extends React.Component {
             <AutoForm ref={(ref) => { this.formRef = ref; }} schema={RecipeSchema} onSubmit={this.submit}>
               <Segment>
                 <TextField name='name'/>
+                <TextField name='image'/>
                 <TextField name='description'/>
                 <Header as="h4">Ingredients</Header>
                 {this.state.ingredients.map((ingredient, idx) => (
@@ -162,9 +164,9 @@ class AddRecipe extends React.Component {
                 <Button onClick={this.handleAddDirection} size='small'>Add Another Step</Button>
                 <SubmitField value='Submit'/>
                 <ErrorsField/>
-                <HiddenField name='ingredients' value={"food"}/>
-                <HiddenField name='equipment' value={"things"}/>
-                <HiddenField name='directions' value={"steps"}/>
+                {/*<HiddenField name='ingredients' value="'name': 'celery'"/>*/}
+                {/*<HiddenField name='equipment' value="'name': 'celery'"/>*/}
+                {/*<HiddenField name='directions' value="'name': 'celery'"/>*/}
                 <HiddenField name='creator' value='fakeuser@foo.com'/>
               </Segment>
             </AutoForm>
