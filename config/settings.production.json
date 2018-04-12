@@ -12,6 +12,7 @@
   "galaxy.meteor.com": {
     "env": {
       "MONGO_URL": "mongodb://bobby:flay@ds014388.mlab.com:14388/constrainedcooking"
+
     }
   }
 }
