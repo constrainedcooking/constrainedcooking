@@ -15,25 +15,24 @@ import PropTypes from 'prop-types';
 /** Renders the Page for editing a single document. */
 class ProfileEdit extends React.Component {
 
-  /** On successful submit, insert the data. */
-  submit(data) {
-    const { userName, firstName, lastName, restrictions, image, _id } = data;
-    Users.update(_id, { $set: { userName, firstName, lastName, restrictions, image } }, (error) => (error ?
-        Bert.alert({ type: 'danger', message: `Update failed: ${error.message}` }) :
-        Bert.alert({ type: 'success', message: 'Update succeeded' })));
-  }
+  // /** On successful submit, insert the data. */
+  // submit(data) {
+  //   const { userName, firstName, lastName, restrictions, image, _id } = data;
+  //   Users.update(_id, { $set: { userName, firstName, lastName, restrictions, image } }, (error) => (error ?
+  //       Bert.alert({ type: 'danger', message: `Update failed: ${error.message}` }) :
+  //       Bert.alert({ type: 'success', message: 'Update succeeded' })));
+  // }
 
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
-    return (this.props.ready) ? this.renderPage() : <Loader>Getting data</Loader>;
+    return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   renderPage() {
+    console.log('in render page');
     return (
-        <Header>HI</Header>
-        /*
         <Grid container centered>
           <Grid.Column>
             <Header as="h2" textAlign="center">Edit Profile</Header>
@@ -51,7 +50,6 @@ class ProfileEdit extends React.Component {
             </AutoForm>
           </Grid.Column>
         </Grid>
-        */
     );
   }
 }
@@ -69,6 +67,7 @@ export default withTracker(({ match }) => {
   const documentId = match.params._id;
   // Get access to Stuff documents.
   const subscription = Meteor.subscribe('Users');
+  console.log('got here');
   return {
     doc: Users.findOne(documentId),
     ready: subscription.ready(),

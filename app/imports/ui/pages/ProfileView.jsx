@@ -35,7 +35,7 @@ ProfileView.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Get access to Stuff documents.
-  const subscription = Meteor.subscribe('User');
+  const subscription = Meteor.subscribe('Users');
   return {
     user: Users.find({}).fetch(),
     ready: subscription.ready(),
