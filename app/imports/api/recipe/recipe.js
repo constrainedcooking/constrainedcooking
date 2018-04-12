@@ -10,6 +10,7 @@ const RecipeSchema = new SimpleSchema({
   name: String,
   image: String,
   description: String,
+  tag: String,
   // ingredients: [Object],
   // equipment: [Object],
   // directions: [Object],

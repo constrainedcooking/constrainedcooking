@@ -116,10 +116,10 @@ class AddRecipe extends React.Component {
 
   /** On submit, insert the data. */
   submit(data) {
-    const { name, image, description } = data;
+    const { name, image, description, tag } = data;
     const { ingredients, equipment, directions } = this.state;
     const creator = Meteor.user().username;
-    Recipes.insert({ name, image, description, ingredients, equipment, directions, creator }, this.insertCallback);
+    Recipes.insert({ name, image, description, tag, ingredients, equipment, directions, creator }, this.insertCallback);
   }
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
@@ -133,6 +133,7 @@ class AddRecipe extends React.Component {
                 <TextField name='name'/>
                 <TextField name='image'/>
                 <TextField name='description'/>
+                <TextField name='tag'/>
                 <Header as="h4">Ingredients</Header>
                 {this.state.ingredients.map((ingredient, idx) => (
                 <div>
@@ -164,7 +165,7 @@ class AddRecipe extends React.Component {
                 <Button onClick={this.handleAddDirection} size='small'>Add Another Step</Button>
                 <SubmitField value='Submit'/>
                 <ErrorsField/>
-                {/*<HiddenField name='ingredients' value="'name': 'celery'"/>*/}
+                {/*<HiddenField name='ingredients' value=/>*/}
                 {/*<HiddenField name='equipment' value="'name': 'celery'"/>*/}
                 {/*<HiddenField name='directions' value="'name': 'celery'"/>*/}
                 <HiddenField name='creator' value='fakeuser@foo.com'/>
