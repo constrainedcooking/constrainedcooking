@@ -11,6 +11,7 @@
       "description": "I am originally from France." }],
   "galaxy.meteor.com": {
     "env": {
-      "MONGO_URL": "mongodb://Cristina McLaughlin:RanGerQ12.@ds139919.mlab.com:39919/constrainedcookingdb"
+      "MONGO_URL": "mongodb:/cemclaug:RanGerQ12.@ds139919.mlab.com:39919/constrainedcookingdb"
     }
   }
+}

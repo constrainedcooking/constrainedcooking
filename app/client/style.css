@@ -1,0 +1,8 @@
+.constrainedcooking-background{
+  background: url('/images/landingpage.jpg')no-repeat center center fixed;
+  background-size: cover;
+}
+
+.landing-colorblock{
+  background-color: #FFFAF0;
+}
