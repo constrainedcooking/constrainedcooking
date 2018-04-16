@@ -22,13 +22,15 @@ class AddRecipe extends React.Component {
     this.formRef = null;
     this.state = {
       name: '',
+      image: '',
+      description:'',
+      tag:'',
       ingredients: [{name: '', amount: ''}],
       equipment: [{name: ''}],
       directions: [{step:''}],
     };
   }
 
-  nonEmptySpace = {"some":"things"};
   /** Notify the user of the results of the submit. If successful, clear the form. */
   insertCallback(error) {
     if (error) {
@@ -37,6 +39,26 @@ class AddRecipe extends React.Component {
       Bert.alert({ type: 'success', message: 'Add succeeded' });
       this.formRef.reset();
     }
+  }
+
+  handleNameChange = (evt) => {
+    const newName = evt.target.value;
+    this.setState({ name: newName });
+  }
+
+  handleTagChange = (evt) => {
+    const newTag = evt.target.value;
+    this.setState({ tag: newTag });
+  }
+
+  handleImageChange = (evt) => {
+    const newImage = evt.target.value;
+    this.setState({ image: newImage });
+  }
+
+  handleDescriptionChange = (evt) => {
+    const newDescription = evt.target.value;
+    this.setState({ description: newDescription });
   }
 
   /** Beginning of Ingredient functions */
@@ -115,9 +137,8 @@ class AddRecipe extends React.Component {
   }
 
   /** On submit, insert the data. */
-  submit(data) {
-    const { name, image, description, tag } = data;
-    const { ingredients, equipment, directions } = this.state;
+  submit() {
+    const { name, image, description, tag, ingredients, equipment, directions } = this.state;
     const creator = Meteor.user().username;
     Recipes.insert({ name, image, description, tag, ingredients, equipment, directions, creator }, this.insertCallback);
   }
@@ -128,16 +149,25 @@ class AddRecipe extends React.Component {
         <Grid container centered>
           <Grid.Column>
             <Header as="h2" textAlign="center">Add Recipe</Header>
-            <AutoForm ref={(ref) => { this.formRef = ref; }} schema={RecipeSchema} onSubmit={this.submit}>
+            <Form ref={(ref) => { this.formRef = ref; }}>
               <Segment>
-                <TextField name='name'/>
-                <TextField name='image'/>
-                <TextField name='description'/>
-                <TextField name='tag'/>
+                <Form.Field className='name' onChange={this.handleNameChange}>
+                  <label>Recipe Name</label>
+                  <input placeholder='' />
+                </Form.Field>
+                <Form.Field className='image' onChange={this.handleImageChange}>
+                  <label>Image</label>
+                  <input placeholder='url location' />
+                </Form.Field>
+                <Form.Field className='description' onChange={this.handleDescriptionChange}>
+                  <label>Description</label>
+                  <input placeholder='short recipe description' />
+                </Form.Field>
+                <Form.Input className='tag' onChange={this.handleTagChange} label='tag' placeholder='tage'/>
                 <Header as="h4">Ingredients</Header>
                 {this.state.ingredients.map((ingredient, idx) => (
                 <div>
-                  <Form.Group>
+                  <Form.Group className='ingredients'>
                     <Form.Input placeholder='name' value={ingredient.name} onChange={this.handleIngredientNameChange(idx)}/>
                     <Form.Input placeholder='ie. 2 tsp' value={ingredient.amount} onChange={this.handleIngredientAmountChange(idx)}/>
                     <Button onClick={this.handleRemoveIngredient(idx)} size='small'>Remove</Button>
@@ -148,7 +178,7 @@ class AddRecipe extends React.Component {
                 <Header as="h4">Equipment</Header>
                 {this.state.equipment.map((equip, idx) => (
                     <div>
-                      <Form.Group>
+                      <Form.Group className='equipment'>
                         <Form.Input placeholder='name' value={equip.name} onChange={this.handleEquipmentChange(idx)}/>
                         <Button onClick={this.handleRemoveEquipment(idx)} size='small'>Remove</Button>
                       </Form.Group>
@@ -158,19 +188,14 @@ class AddRecipe extends React.Component {
                 <Header as="h4">Directions</Header>
                 {this.state.directions.map((direction, idx) => (
                     <div>
-                        <TextArea placeholder='step' value={direction.name} onChange={this.handleDirectionChange(idx)}/>
+                        <TextArea placeholder='step' value={direction.name} onChange={this.handleDirectionChange(idx)} className='directions'/>
                         <Button onClick={this.handleRemoveDirection(idx)} size='small'>Remove</Button>
                     </div>
                 ))}
                 <Button onClick={this.handleAddDirection} size='small'>Add Another Step</Button>
-                <SubmitField value='Submit'/>
-                <ErrorsField/>
-                {/*<HiddenField name='ingredients' value=/>*/}
-                {/*<HiddenField name='equipment' value="'name': 'celery'"/>*/}
-                {/*<HiddenField name='directions' value="'name': 'celery'"/>*/}
-                <HiddenField name='creator' value='fakeuser@foo.com'/>
+                <Button onClick={this.submit} value='Submit'>Submit</Button>
               </Segment>
-            </AutoForm>
+            </Form>
           </Grid.Column>
         </Grid>
     );

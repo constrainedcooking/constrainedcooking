@@ -11,9 +11,9 @@ const RecipeSchema = new SimpleSchema({
   image: String,
   description: String,
   tag: String,
-  // ingredients: [Object],
-  // equipment: [Object],
-  // directions: [Object],
+  ingredients: [Object],
+  equipment: [Object],
+  directions: [Object],
   creator: String,
 }, { tracker: Tracker });
 
