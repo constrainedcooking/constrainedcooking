@@ -8,16 +8,16 @@ import { Bert } from 'meteor/themeteorchef:bert';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class Profile extends React.Component {
-
+/**
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
   }
 
   onClick() {
-    /* eslint-disable-next-line */
+    // /* eslint-disable-next-line /
     if (confirm("Do you want to make this person/group a vendor?")) {
-      const account = Accounts.findUserByEmail(this.props.user.owner);
+      const account = Accounts.findUserByUsername(this.props.user.owner);
       Roles.addUsersToRoles(account, 'vendor');
     }
   }
@@ -29,6 +29,7 @@ class Profile extends React.Component {
       Bert.alert({ type: 'success', message: 'Add succeeded' });
     }
   }
+  */
   render() {
     return (
         <Card centered>
@@ -45,7 +46,6 @@ class Profile extends React.Component {
             </Card.Description>
           </Card.Content>
            <Card.Content extra>
-             <Button basic onClick = {this.onClick}>Set as Vendor</Button>
           </Card.Content>
         </Card>
     );
