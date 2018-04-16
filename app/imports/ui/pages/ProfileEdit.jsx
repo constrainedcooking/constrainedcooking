@@ -16,12 +16,12 @@ import PropTypes from 'prop-types';
 class ProfileEdit extends React.Component {
 
   // /** On successful submit, insert the data. */
-  // submit(data) {
-  //   const { userName, firstName, lastName, restrictions, image, _id } = data;
-  //   Users.update(_id, { $set: { userName, firstName, lastName, restrictions, image } }, (error) => (error ?
-  //       Bert.alert({ type: 'danger', message: `Update failed: ${error.message}` }) :
-  //       Bert.alert({ type: 'success', message: 'Update succeeded' })));
-  // }
+   submit(data) {
+     const { userName, firstName, lastName, restrictions, image, _id } = data;
+     Users.update(_id, { $set: { userName, firstName, lastName, restrictions, image } }, (error) => (error ?
+         Bert.alert({ type: 'danger', message: `Update failed: ${error.message}` }) :
+         Bert.alert({ type: 'success', message: 'Update succeeded' })));
+   }
 
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */

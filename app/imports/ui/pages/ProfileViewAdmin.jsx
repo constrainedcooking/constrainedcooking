@@ -2,14 +2,12 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Image, Table, Header, Loader, Card, Container } from 'semantic-ui-react';
 import { Users } from '/imports/api/user/user';
-import { Stuffs } from '/imports/api/stuff/stuff';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import Profile from '/imports/ui/components/Profile';
+import ProfileAdmin from '/imports/ui/components/ProfileAdmin';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-class ProfileView extends React.Component {
+class ProfileViewAdmin extends React.Component {
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
@@ -20,15 +18,17 @@ class ProfileView extends React.Component {
   renderPage() {
     return (
         <Container>
-          <Header textAlign="center">Account</Header>
-          {this.props.user.map((user) => <Profile key={user._id} user={user} />)}
+          <Header textAlign="center">User accounts List</Header>
+          <Card.Group>
+            {this.props.user.map((user) => <ProfileAdmin key={user._id} user={user} />)}
+          </Card.Group>
         </Container>
     );
   }
 }
 
 /** Require an array of Stuff documents in the props. */
-ProfileView.propTypes = {
+ProfileViewAdmin.propTypes = {
   user: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
@@ -36,10 +36,10 @@ ProfileView.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Get access to Stuff documents.
-  const subscription = Meteor.subscribe('Users');
+  const subscription = Meteor.subscribe('UsersAdmin');
   return {
     user: Users.find({}).fetch(),
     ready: subscription.ready(),
   };
-})(ProfileView);
+})(ProfileViewAdmin);
 
