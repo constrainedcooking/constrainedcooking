@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Image} from 'semantic-ui-react';
+import { Card, Image, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ class Recipe extends React.Component {
     return (
         //<Link to={`/viewrecipe/${this.props.recipe._id}`}>
         <Card centered>
-          <Image src={this.props.recipe.image} />
+          <Image src={this.props.recipe.image}/>
           <Card.Content>
             <Card.Header centered>
               {this.props.recipe.name}
@@ -19,7 +19,8 @@ class Recipe extends React.Component {
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
-            {this.props.recipe.tag}
+            <Label as='a' tag>
+              {this.props.recipe.tag}</Label>
           </Card.Content>
         </Card>
         //</Link>
