@@ -19,7 +19,7 @@ class NavBar extends React.Component {
           <Dropdown item text='Recipes'>
             <Dropdown.Menu>
               <Dropdown.Item as = {NavLink} activeClassName = "" exact to ="/list">Home</Dropdown.Item>
-              <Dropdown.Item>Others</Dropdown.Item>
+              <Dropdown.Item as = {NavLink} activeClassName = "" exact to ="/addrecipe">Add Recipe</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Item>

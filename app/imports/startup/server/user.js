@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { Users } from '../../api/user/user.js';
+import { Vendors } from '../../api/vendor/vendor';
 
 /** Initialize the database with a default data document. */
 function addData(data) {
@@ -33,4 +34,3 @@ Meteor.publish('UsersAdmin', function publish() {
   }
   return this.ready();
 });
-
