@@ -20,6 +20,8 @@ import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
+import ProfileView from '../pages/ProfileView';
+import ProfileEdit from '../pages/ProfileEdit';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -32,16 +34,17 @@ class App extends React.Component {
               <Route exact path="/" component={Landing}/>
               <Route path="/signin" component={Signin}/>
               <Route path="/signup" component={Signup}/>
-              <ProtectedRoute path="/list" component={ListRecipes}/>
+              <Route path="/list" component={ListRecipes}/>
               <ProtectedRoute path="/add" component={AddStuff}/>
               <ProtectedRoute path="/addvendoritem" component={AddVendorItem}/>
               <ProtectedRoute path="/listvendor" component={ListVendor}/>
               <ProtectedRoute path="/addrecipe" component={AddRecipe}/>
-              <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
+              <ProtectedRoute path="/editprofile/:_id" component={ProfileEdit}/>
               <ProtectedRoute path="/viewrecipe/:_id" component={ViewRecipe}/>
               <ProtectedRoute path="/editvendoritem/:_id" component={EditVendorItem}/>
               <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/>
               <ProtectedRoute path="/signout" component={Signout}/>
+              <ProtectedRoute path="/profileview" component={ProfileView}/>
               <Route component={NotFound}/>
             </Switch>
             <Footer/>
