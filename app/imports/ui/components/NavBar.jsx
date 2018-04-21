@@ -51,7 +51,7 @@ class NavBar extends React.Component {
                 <Dropdown.Menu>
                   <Dropdown.Item icon="sign out" text="Sign Out" as={NavLink} exact to="/signout"/>
                   {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
-                  <Dropdown.Item icon="user" text="All Profiles" as={NavLink} exact to="/profilelistadmin"/>
+                  <Dropdown.Item icon="user" text="All Profiles" as={NavLink} exact to="/profileviewadmin/none"/>
                       ) : ''}
                   <Dropdown.Item icon="edit" text="Edit Profile" as={NavLink} exact to="/profileview"/>
                 </Dropdown.Menu>

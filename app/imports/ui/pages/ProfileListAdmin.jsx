@@ -1,19 +1,31 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Image, Card, Dropdown, Loader, Menu, Container, Form } from 'semantic-ui-react';
+import { Dropdown, Loader, Menu, Container, Form } from 'semantic-ui-react';
 import { Users } from '/imports/api/user/user';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import SubmitField from 'uniforms-semantic/SubmitField';
-import ProfileItemAdmin from '/imports/ui/components/ProfileItemAdmin';
-import { NavLink } from 'react-router-dom';
+import { Bert } from 'meteor/themeteorchef:bert';
+import { NavLink, Redirect } from 'react-router-dom';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ProfileListAdmin extends React.Component {
 
+
   constructor(props) {
     super(props);
-    this.state = { email: '', emailExists: false };
+    this.state = {
+      emailExists: false,
+      email: '',
+      userProfile: {
+        userName: 'none',
+        firstName: 'none',
+        lastName: 'none',
+        image: 'https://philipmjohnson.github.io/images/philip2.jpeg',
+        restrictions: 'none',
+        owner: 'none',
+        id: 'none',
+      },
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -23,22 +35,36 @@ class ProfileListAdmin extends React.Component {
   }
 
   handleSubmit() {
-    const { email, password } = this.state;
-    Meteor.loginWithPassword(email, password, (err) => {
-      if (err) {
-        this.setState({ error: err.reason });
-      } else {
-        this.setState({ error: '', redirectToReferer: true });
-      }
+    const email = this.state.email;
+    const userProfile = this.props.users.find(function (element) {
+      return element.owner === email;
     });
+    if (userProfile !== undefined) {
+        this.setState({ emailExists: true });
+        this.setState({
+          userProfile: {
+            userName: userProfile.userName,
+            firstName: userProfile.firstName,
+            lastName: userProfile.lastName,
+            image: userProfile.image,
+            restrictions: userProfile.restrictions,
+            owner: userProfile.owner,
+            _id: userProfile._id,
+          },
+        });
+    } else {
+      Bert.alert({ type: 'danger', message: 'That email does not exist' });
+    }
   }
-
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
   /** Render the page once subscriptions have been received. */
   renderPage() {
+    if (this.state.emailExists) {
+      return <Redirect to={`/profileviewadmin/${this.state.userProfile._id}`}/>;
+    }
     return (
         <Container>
           <Menu>
@@ -57,7 +83,7 @@ class ProfileListAdmin extends React.Component {
             </Menu.Item>
             {/* search for profiles */}
             <Menu.Item>
-              <Form>
+              <Form onSubmit={this.handleSubmit}>
                 <Form.Input label="Email"
                             icon="user"
                             iconPosition="left"

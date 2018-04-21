@@ -4,56 +4,86 @@ import { Image, Card, Dropdown, Loader, Menu, Container, Header, Form } from 'se
 import { Users } from '/imports/api/user/user';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import SubmitField from 'uniforms-semantic/SubmitField';
-import ProfileItemAdmin from '/imports/ui/components/ProfileItemAdmin';
-import { NavLink } from 'react-router-dom';
+import ProfileAdmin from '/imports/ui/components/ProfileAdmin';
+import { Bert } from 'meteor/themeteorchef:bert';
+import { NavLink, withRouter } from 'react-router-dom';
+
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ProfileListViewAdmin extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { email: '', emailExists: false };
+    this.state = {
+      emailExists: false,
+      email: '',
+      userProfile: {
+        userName: this.props.profile.userName,
+        firstName: this.props.profile.firstName,
+        lastName: this.props.profile.lastName,
+        image: this.props.profile.image,
+        restrictions: this.props.profile.restrictions,
+        owner: this.props.profile.owner,
+        id: this.props.profile.owner,
+      },
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
   handleChange(e, { name, value }) {
     this.setState({ [name]: value });
   }
 
   handleSubmit() {
-    const { email } = this.state;
-    if (Users.find({ owner: email }).fetch() === '') {
-      this.setState({ emailExists: true });
+    const email = this.state.email;
+    const userProfile = this.props.users.find(function (element) {
+      return element.owner === email;
+    });
+    if (userProfile !== undefined) {
+      if (email !== this.state.userProfile.owner) {
+        this.setState({
+          userProfile: {
+            userName: userProfile.userName,
+            firstName: userProfile.firstName,
+            lastName: userProfile.lastName,
+            image: userProfile.image,
+            restrictions: userProfile.restrictions,
+            owner: userProfile.owner,
+            _id: userProfile._id,
+          },
+        });
+      } else {
+        /* eslint-disable-next-line */
+        Bert.alert({ type: 'danger', message: 'You are already on this profile' });
+      }
+    } else {
+      Bert.alert({ type: 'danger', message: 'That email does not exist' });
     }
   }
-
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader>Getting data</Loader>;
   }
   /** Render the page once subscriptions have been received. */
   renderPage() {
+    const allUsers = this.props.users.map(user => ({
+      key: user._id,
+      text: user.owner,
+      value: user._owner,
+      image: { avatar: true, src: user.image },
+    }));
     return (
         <Container>
           {/* dropdown for profiles */}
           <Menu>
+            {/* dropdown for profiles */}
             <Menu.Item>
-              <Dropdown item text='users'>
-                <Dropdown.Menu>
-                  {this.props.users.map((user) =>
-                      <Dropdown.Item
-                          key={user._id} as = {NavLink}
-                          activeClassName = ""
-                          exact to ={`/profileviewadmin/${user._id}`}>
-                        {user.owner}</Dropdown.Item>)}
-                </Dropdown.Menu>
-             </Dropdown>
-           </Menu.Item>
+              <Dropdown search selection text='users' options={allUsers} />
+
+            </Menu.Item>
             {/* search for profiles */}
             <Menu.Item>
-              <Form>
+              <Form onSubmit={this.handleSubmit}>
                 <Form.Input label="Email"
                             icon="user"
                             iconPosition="left"
@@ -67,24 +97,7 @@ class ProfileListViewAdmin extends React.Component {
             </Menu.Item>
           </Menu>
           {/* display card for profile */}
-          <Card centered>
-            <Header>{this.props.profile.owner}</Header>
-            <Image size="medium" src={this.props.profile.image } />
-            <Card.Content>
-              <Card.Header>
-                {this.props.profile.userName}
-              </Card.Header>
-              <Card.Meta>
-                {this.props.profile.firstName} {this.props.profile.lastName}
-              </Card.Meta>
-              <Card.Description>
-                Dietary Restrictions: {this.props.profile.restrictions}
-              </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              { /* <Link to={`/editprofile/${this.props.user._id}`}>Edit</Link> */ }
-            </Card.Content>
-          </Card>
+          <ProfileAdmin key={this.state.userProfile._id} user={this.state.userProfile} />;
         </Container>
     );
   }
@@ -102,7 +115,7 @@ export default withTracker(({ match }) => {
   // Get access to Stuff documents.
   const subscription = Meteor.subscribe('UsersAdmin');
   const documentId = match.params._id;
-  if (Users.findOne(documentId) === '') {
+  if (Users.findOne(documentId) === undefined) {
     return {
       profile: {
         userName: 'none',
@@ -110,7 +123,7 @@ export default withTracker(({ match }) => {
         lastName: 'none',
         image: 'https://philipmjohnson.github.io/images/philip2.jpeg',
         restrictions: 'none',
-        owner: 'none',
+        owner: 'no profile selected',
       },
       users: Users.find({}).fetch(),
       ready: subscription.ready(),

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Image } from 'semantic-ui-react';
+import { Card, Image, Header } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ class Profile extends React.Component {
   render() {
     return (
         <Card centered>
+          <Header>{this.props.user.owner}</Header>
           <Image size="medium" src={this.props.user.image } />
           <Card.Content>
             <Card.Header>
