@@ -32,29 +32,16 @@ class ProfileListAdmin extends React.Component {
   }
 
   handleChange(e, { name, value }) {
-    if (name === 'email') {
       this.setState({ [name]: value });
-    } else {
-      const userProfile = this.props.users.find(function (element) {
-        return element.owner === value;
-      });
-      this.setState({ emailExists: true });
-      this.setState({
-        userProfile: {
-          userName: userProfile.userName,
-          firstName: userProfile.firstName,
-          lastName: userProfile.lastName,
-          image: userProfile.image,
-          restrictions: userProfile.restrictions,
-          owner: userProfile.owner,
-          _id: userProfile._id,
-        },
-      });
-    }
   }
 
-  handleSubmit() {
-    const email = this.state.email;
+  handleSubmit(e, { name }) {
+    let email = '';
+    if (name === 'dropdown') {
+      email = this.state.profileView;
+    } else {
+      email = this.state.email;
+    }
     const userProfile = this.props.users.find(function (element) {
       return element.owner === email;
     });
@@ -95,15 +82,19 @@ class ProfileListAdmin extends React.Component {
           <Menu>
             {/* dropdown for profiles */}
             <Menu.Item>
-              <Dropdown
-                  name="profileView"
-                  search selection text='users' options={allUsers}
-                  onChange={this.handleChange}
-              />
+              <Form name="dropdown" onSubmit={this.handleSubmit}>
+                <Form.Select name="profileView"
+                             label="Search with dropdown"
+                             placehold='users'
+                             options={allUsers}
+                             onChange={this.handleChange}
+                />
+                <Form.Button content="Submit"/>
+              </Form>
             </Menu.Item>
             {/* search for profiles */}
             <Menu.Item>
-              <Form onSubmit={this.handleSubmit}>
+              <Form name="search" onSubmit={this.handleSubmit}>
                 <Form.Input label="Email"
                             icon="user"
                             iconPosition="left"

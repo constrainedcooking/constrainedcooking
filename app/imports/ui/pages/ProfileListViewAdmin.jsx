@@ -38,37 +38,22 @@ class ProfileListViewAdmin extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(e, { name, value }) {
-    if (name === 'email') {
       this.setState({ [name]: value });
-    } else {
-      const userProfile = this.props.users.find(function (element) {
-        return element.owner === value;
-      });
-      if (value !== this.state.userProfile.owner) {
-        this.setState({
-          userProfile: {
-            userName: userProfile.userName,
-            firstName: userProfile.firstName,
-            lastName: userProfile.lastName,
-            image: userProfile.image,
-            restrictions: userProfile.restrictions,
-            owner: userProfile.owner,
-            _id: userProfile._id,
-          },
-        });
-      } else {
-        Bert.alert({ type: 'danger', message: 'You are already on this profile' });
-      }
-    }
   }
 
-  handleSubmit() {
-    const email = this.state.email;
+  handleSubmit(e, { name }) {
+    let email = '';
+    if (name === 'dropdown') {
+      email = this.state.profileView;
+    } else {
+      email = this.state.email;
+    }
     const userProfile = this.props.users.find(function (element) {
       return element.owner === email;
     });
     if (userProfile !== undefined) {
-      if (email !== this.state.userProfile.owner) {
+      if (userProfile.owner !== this.state.userProfile.owner) {
+        this.setState({ emailExists: true });
         this.setState({
           userProfile: {
             userName: userProfile.userName,
@@ -81,8 +66,7 @@ class ProfileListViewAdmin extends React.Component {
           },
         });
       } else {
-        /* eslint-disable-next-line */
-        Bert.alert({ type: 'danger', message: 'You are already on this profile' });
+        Bert.alert({ type: 'danger', message: 'you are already at that email' });
       }
     } else {
       Bert.alert({ type: 'danger', message: 'That email does not exist' });
@@ -100,16 +84,20 @@ class ProfileListViewAdmin extends React.Component {
           <Menu>
             {/* dropdown for profiles */}
             <Menu.Item>
-              <Dropdown
-                  name="profileView"
-                  search selection text='users' options={this.state.allUsers}
-                  onChange={this.handleChange}
-              />
+              <Form name="dropdown" onSubmit={this.handleSubmit}>
+                <Form.Select name="profileView"
+                             label="Search with dropdown"
+                             placehold='users'
+                             options={this.state.allUsers}
+                             onChange={this.handleChange}
+                />
+                <Form.Button content="Submit"/>
+              </Form>
             </Menu.Item>
             {/* search for profiles */}
             <Menu.Item>
-              <Form onSubmit={this.handleSubmit}>
-                <Form.Input label="Email"
+              <Form name="search" onSubmit={this.handleSubmit}>
+                <Form.Input label="Search with email"
                             icon="user"
                             iconPosition="left"
                             name="email"
