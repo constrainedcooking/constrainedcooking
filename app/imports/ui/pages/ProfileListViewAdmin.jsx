@@ -14,6 +14,12 @@ class ProfileListViewAdmin extends React.Component {
 
   constructor(props) {
     super(props);
+    const allUsers = this.props.users.map(user => ({
+      key: user._id,
+      text: user.owner,
+      value: user.owner,
+      image: { avatar: true, src: user.image },
+    }));
     this.state = {
       emailExists: false,
       email: '',
@@ -26,12 +32,34 @@ class ProfileListViewAdmin extends React.Component {
         owner: this.props.profile.owner,
         id: this.props.profile.owner,
       },
+      allUsers: allUsers,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(e, { name, value }) {
-    this.setState({ [name]: value });
+    if (name === 'email') {
+      this.setState({ [name]: value });
+    } else {
+      const userProfile = this.props.users.find(function (element) {
+        return element.owner === value;
+      });
+      if (value !== this.state.userProfile.owner) {
+        this.setState({
+          userProfile: {
+            userName: userProfile.userName,
+            firstName: userProfile.firstName,
+            lastName: userProfile.lastName,
+            image: userProfile.image,
+            restrictions: userProfile.restrictions,
+            owner: userProfile.owner,
+            _id: userProfile._id,
+          },
+        });
+      } else {
+        Bert.alert({ type: 'danger', message: 'You are already on this profile' });
+      }
+    }
   }
 
   handleSubmit() {
@@ -66,20 +94,17 @@ class ProfileListViewAdmin extends React.Component {
   }
   /** Render the page once subscriptions have been received. */
   renderPage() {
-    const allUsers = this.props.users.map(user => ({
-      key: user._id,
-      text: user.owner,
-      value: user._owner,
-      image: { avatar: true, src: user.image },
-    }));
     return (
         <Container>
           {/* dropdown for profiles */}
           <Menu>
             {/* dropdown for profiles */}
             <Menu.Item>
-              <Dropdown search selection text='users' options={allUsers} />
-
+              <Dropdown
+                  name="profileView"
+                  search selection text='users' options={this.state.allUsers}
+                  onChange={this.handleChange}
+              />
             </Menu.Item>
             {/* search for profiles */}
             <Menu.Item>

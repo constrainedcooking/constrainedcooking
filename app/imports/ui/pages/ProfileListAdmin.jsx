@@ -16,6 +16,7 @@ class ProfileListAdmin extends React.Component {
     this.state = {
       emailExists: false,
       email: '',
+      profileView: '',
       userProfile: {
         userName: 'none',
         firstName: 'none',
@@ -31,7 +32,25 @@ class ProfileListAdmin extends React.Component {
   }
 
   handleChange(e, { name, value }) {
-    this.setState({ [name]: value });
+    if (name === 'email') {
+      this.setState({ [name]: value });
+    } else {
+      const userProfile = this.props.users.find(function (element) {
+        return element.owner === value;
+      });
+      this.setState({ emailExists: true });
+      this.setState({
+        userProfile: {
+          userName: userProfile.userName,
+          firstName: userProfile.firstName,
+          lastName: userProfile.lastName,
+          image: userProfile.image,
+          restrictions: userProfile.restrictions,
+          owner: userProfile.owner,
+          _id: userProfile._id,
+        },
+      });
+    }
   }
 
   handleSubmit() {
@@ -65,21 +84,22 @@ class ProfileListAdmin extends React.Component {
     if (this.state.emailExists) {
       return <Redirect to={`/profileviewadmin/${this.state.userProfile._id}`}/>;
     }
+    const allUsers = this.props.users.map(user => ({
+      key: user._id,
+      text: user.owner,
+      value: user.owner,
+      image: { avatar: true, src: user.image },
+    }));
     return (
         <Container>
           <Menu>
             {/* dropdown for profiles */}
             <Menu.Item>
-              <Dropdown item text='users'>
-                <Dropdown.Menu>
-                  {this.props.users.map((user) =>
-                      <Dropdown.Item
-                          key={user._id} as = {NavLink}
-                          activeClassName = ""
-                          exact to ={`/profileviewadmin/${user._id}`}>
-                        {user.owner}</Dropdown.Item>)}
-                </Dropdown.Menu>
-              </Dropdown>
+              <Dropdown
+                  name="profileView"
+                  search selection text='users' options={allUsers}
+                  onChange={this.handleChange}
+              />
             </Menu.Item>
             {/* search for profiles */}
             <Menu.Item>
