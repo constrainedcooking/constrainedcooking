@@ -20,7 +20,8 @@ class Recipe extends React.Component {
           </Card.Content>
           <Card.Content extra>
             <Label as='a' tag>
-              {this.props.recipe.tag}</Label>
+              {this.props.recipe.tag}
+              </Label>
           </Card.Content>
         </Card>
         //</Link>
