@@ -24,10 +24,11 @@ class AddRecipe extends React.Component {
       name: '',
       image: '',
       description:'',
-      tag:'',
+      time: 0,
+      servings: 0,
+      tags:[''],
       ingredients: [{name: '', amount: ''}],
-      equipment: [{name: ''}],
-      directions: [{step:''}],
+      directions: [''],
     };
   }
 
@@ -46,9 +47,14 @@ class AddRecipe extends React.Component {
     this.setState({ name: newName });
   }
 
-  handleTagChange = (evt) => {
-    const newTag = evt.target.value;
-    this.setState({ tag: newTag });
+  handleTimeChange = (evt) => {
+    const newTime = evt.target.value;
+    this.setState({ time: newTime });
+  }
+
+  handleServingsChange = (evt) => {
+    const newServings = evt.target.value;
+    this.setState({ servings: newServings });
   }
 
   handleImageChange = (evt) => {
@@ -92,33 +98,11 @@ class AddRecipe extends React.Component {
     });
   }
 
-  /** Beginnning of Equipment functions */
-  handleEquipmentChange = (idx) => (evt) => {
-    const newEquipments = this.state.equipment.map((equip, sidx) => {
-      if (idx !== sidx) return equip;
-      return { ...equip, name: evt.target.value };
-    });
-
-    this.setState({ equipment: newEquipments });
-  }
-
-  handleAddEquipment = () => {
-    this.setState({
-      equipment: this.state.equipment.concat([{ name: ''}])
-    });
-  }
-
-  handleRemoveEquipment = (idx) => () => {
-    this.setState({
-      equipment: this.state.equipment.filter((e, sidx) => idx !== sidx)
-    });
-  }
-
   /** Beginnning of Direction functions */
   handleDirectionChange = (idx) => (evt) => {
     const newDirections = this.state.directions.map((direction, sidx) => {
       if (idx !== sidx) return direction;
-      return { ...direction, step: evt.target.value };
+      return evt.target.value;
     });
 
     this.setState({ directions: newDirections });
@@ -126,7 +110,7 @@ class AddRecipe extends React.Component {
 
   handleAddDirection = () => {
     this.setState({
-      directions: this.state.directions.concat([{ step: ''}])
+      directions: this.state.directions.concat([''])
     });
   }
 
@@ -136,11 +120,35 @@ class AddRecipe extends React.Component {
     });
   }
 
+  /** Beginnning of Tags functions */
+
+  handleTagChange = (idx) => (evt) => {
+    const newTags = this.state.tags.map((tag, sidx) => {
+      if (idx !== sidx) return tag;
+      return evt.target.value;
+    });
+
+    this.setState({ tags: newTags });
+  }
+
+  handleAddTag = () => {
+    this.setState({
+      tags: this.state.tags.concat([''])
+    });
+  }
+
+  handleRemoveTag = (idx) => () => {
+    this.setState({
+      tags: this.state.tags.filter((t, sidx) => idx !== sidx)
+    });
+  }
+
+
   /** On submit, insert the data. */
   submit() {
-    const { name, image, description, tag, ingredients, equipment, directions } = this.state;
+    const { name, image, description, time, servings, tags, ingredients, directions } = this.state;
     const creator = Meteor.user().username;
-    Recipes.insert({ name, image, description, tag, ingredients, equipment, directions, creator }, this.insertCallback);
+    Recipes.insert({ name, image, description, time, servings, tags, ingredients, directions, creator }, this.insertCallback);
   }
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
@@ -163,7 +171,24 @@ class AddRecipe extends React.Component {
                   <label>Description</label>
                   <input placeholder='short recipe description' />
                 </Form.Field>
-                <Form.Input className='tag' onChange={this.handleTagChange} label='tag' placeholder='tage'/>
+                <Form.Field className='time' onChange={this.handleTimeChange}>
+                  <label>Estimated Cooking Time (in minutes)</label>
+                  <input placeholder='i.e 20' />
+                </Form.Field>
+                <Form.Field className='servings' onChange={this.handleServingsChange}>
+                  <label>Number of Servings</label>
+                  <input placeholder='2' />
+                </Form.Field>
+                <Header as="h4">Tags</Header>
+                {this.state.tags.map((tag, idx) => (
+                    <div>
+                      <Form.Group className='tags'>
+                        <Form.Input placeholder='name' value={tag} onChange={this.handleTagChange(idx)}/>
+                        <Button onClick={this.handleRemoveTag(idx)} size='small'>Remove</Button>
+                      </Form.Group>
+                    </div>
+                ))}
+                <Button onClick={this.handleAddTag} size='small'>Add Tag</Button>
                 <Header as="h4">Ingredients</Header>
                 {this.state.ingredients.map((ingredient, idx) => (
                 <div>
@@ -175,16 +200,6 @@ class AddRecipe extends React.Component {
                 </div>
                 ))}
                 <Button onClick={this.handleAddIngredient} size='small'>Add Ingredient</Button>
-                <Header as="h4">Equipment</Header>
-                {this.state.equipment.map((equip, idx) => (
-                    <div>
-                      <Form.Group className='equipment'>
-                        <Form.Input placeholder='name' value={equip.name} onChange={this.handleEquipmentChange(idx)}/>
-                        <Button onClick={this.handleRemoveEquipment(idx)} size='small'>Remove</Button>
-                      </Form.Group>
-                    </div>
-                ))}
-                <Button onClick={this.handleAddEquipment} size='small'>Add Equipment</Button>
                 <Header as="h4">Directions</Header>
                 {this.state.directions.map((direction, idx) => (
                     <div>
