@@ -1,38 +1,14 @@
 import React from 'react';
-import { Accounts } from 'meteor/accounts-base';
-import { Roles } from 'meteor/alanning:roles';
-import { Card, Image, Button } from 'semantic-ui-react';
+import { Card, Image, Header } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { withRouter, Link } from 'react-router-dom';
-import { Bert } from 'meteor/themeteorchef:bert';
+import { withRouter } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
-class Profile extends React.Component {
-/**
-  constructor(props) {
-    super(props);
-    this.onClick = this.onClick.bind(this);
-  }
-
-  onClick() {
-    // /* eslint-disable-next-line /
-    if (confirm("Do you want to make this person/group a vendor?")) {
-      const account = Accounts.findUserByUsername(this.props.user.owner);
-      Roles.addUsersToRoles(account, 'vendor');
-    }
-  }
-
-  deleteCallback(error) {
-    if (error) {
-      Bert.alert({ type: 'danger', message: `Add failed: ${error.message}` });
-    } else {
-      Bert.alert({ type: 'success', message: 'Add succeeded' });
-    }
-  }
-  */
+class ProfileAdmin extends React.Component {
   render() {
     return (
         <Card centered>
+          <Header>{this.props.user.owner}</Header>
           <Image size="medium" src={this.props.user.image } />
           <Card.Content>
             <Card.Header>
@@ -53,9 +29,9 @@ class Profile extends React.Component {
 }
 
 /** Require a document to be passed to this component. */
-Profile.propTypes = {
+ProfileAdmin.propTypes = {
   user: PropTypes.object.isRequired,
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */
-export default withRouter(Profile);
+export default withRouter(ProfileAdmin);
