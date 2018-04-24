@@ -19,7 +19,7 @@ class Recipe extends React.Component {
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
-            {this.props.recipe.tag}
+            {this.props.recipe.tags}
           </Card.Content>
         </Card>
         </Link>
