@@ -19,9 +19,10 @@ class ProfileView extends React.Component {
   /** Render the page once subscriptions have been received. */
   renderPage() {
     return (
-         <div>
+        <Container>
+          <Header textAlign="center">Account</Header>
           {this.props.user.map((user) => <Profile key={user._id} user={user} />)}
-         </div>
+        </Container>
     );
   }
 }

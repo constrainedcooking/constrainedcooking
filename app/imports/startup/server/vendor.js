@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { Vendors } from '../../api/vendor/vendor.js';
+import { Users } from '../../api/user/user';
 
 /** This subscription publishes only the documents associated with the logged in user */
 Meteor.publish('Vendor', function publish() {

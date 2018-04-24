@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { Users } from '../../api/user/user.js';
+import { Vendors } from '../../api/vendor/vendor';
 
 /** Initialize the database with a default data document. */
 function addData(data) {
@@ -27,10 +28,9 @@ Meteor.publish('Users', function publish() {
 
 /** This subscription publishes all documents regardless of user, but only if the logged in user is the Admin.
  * not yet implemented */
-Meteor.publish('UserAdmin', function publish() {
+Meteor.publish('UsersAdmin', function publish() {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return Users.find();
   }
   return this.ready();
 });
-

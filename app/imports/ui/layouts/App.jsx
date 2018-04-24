@@ -22,6 +22,9 @@ import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
 import ProfileView from '../pages/ProfileView';
 import ProfileEdit from '../pages/ProfileEdit';
+// import ProfileViewAdmin from '../pages/ProfileViewAdmin';
+import ProfileListAdmin from '../pages/ProfileListAdmin';
+import ProfileListViewAdmin from '../pages/ProfileListViewAdmin';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -45,6 +48,8 @@ class App extends React.Component {
               <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/>
               <ProtectedRoute path="/signout" component={Signout}/>
               <ProtectedRoute path="/profileview" component={ProfileView}/>
+              <AdminProtectedRoute path="/profilelistadmin" component={ProfileListAdmin}/>
+              <AdminProtectedRoute path="/profileviewadmin/:_id" component={ProfileListViewAdmin}/>
               <Route component={NotFound}/>
             </Switch>
             <Footer/>

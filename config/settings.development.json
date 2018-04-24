@@ -34,6 +34,13 @@
       "owner" : "john@foo.com"
     },
     {
+    "userName": "vendor", "firstName": "bob", "lastName": "ross",
+    "image": "https://avatars0.githubusercontent.com/u/7494478?s=460&v=4",
+    "restrictions": "kosher",
+    "owner" : "food@foo.com"
+    },
+
+    {
       "userName": "bird", "firstName": "jack", "lastName": "sparrow",
       "image": "https://avatars0.githubusercontent.com/u/7494478?s=460&v=4",
       "restrictions": "kosher",
