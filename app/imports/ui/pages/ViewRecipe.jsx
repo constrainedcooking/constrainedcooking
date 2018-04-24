@@ -17,10 +17,21 @@ class ViewRecipe extends React.Component {
   renderPage() {
     return (
         <Container>
-        <Header as="h1">{this.props.recipe.name}</Header>;
+        <Header as="h1">{this.props.recipe.name}</Header>
           <div>
             <Image src={this.props.recipe.image}/>
-            
+            <Header as='h3'>Ingredients</Header>
+            <List>
+              {this.props.recipe.ingredients.map((ingredient, idx) =>(
+                  <List.Item key={idx} >{ingredient['amount']}  {ingredient['name']}</List.Item>  //add ingredient vendor cross-ref here
+              ))}
+            </List>
+          </div>
+          <div>
+            <Header as='h3'>Directions</Header>
+            {this.props.recipe.directions.map((step, idx) => (
+                <p>{idx}){step}</p>
+            ))}
           </div>
         </Container>
     );
@@ -44,3 +55,5 @@ export default withTracker(({ match }) => {
     ready: subscription.ready(),
   };
 })(ViewRecipe);
+
+

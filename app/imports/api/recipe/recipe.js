@@ -10,10 +10,12 @@ const RecipeSchema = new SimpleSchema({
   name: String,
   image: String,
   description: String,
-  tag: String,
-  // ingredients: [Object],
-  // equipment: [Object],
-  // directions: [Object],
+  time: Number,
+  servings: Number,
+  tags: [String],
+  ingredients: {type: Array, optional: false},
+  'ingredients.$': {type: Object, blackbox: true},
+  directions: [String],
   creator: String,
 }, { tracker: Tracker });
 
