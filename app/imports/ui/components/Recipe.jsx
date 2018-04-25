@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Image} from 'semantic-ui-react';
+import { Card, Image, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 
@@ -8,21 +8,26 @@ class Recipe extends React.Component {
   render() {
     return (
         <Link to={`/viewrecipe/${this.props.recipe._id}`}>
-        <Card centered>
-          <Image src={this.props.recipe.image} />
-          <Card.Content>
-            <Card.Header centered>
-              {this.props.recipe.name}
-            </Card.Header>
-            <Card.Description>
-              {this.props.recipe.description}
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            {this.props.recipe.tags}
-          </Card.Content>
-        </Card>
+          <div>
+          <Card centered>
+            <Image src={this.props.recipe.image}/>
+            <Card.Content>
+              <Card.Header centered>
+                {this.props.recipe.name}
+              </Card.Header>
+              <Card.Description>
+                {this.props.recipe.description}
+              </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              {this.props.recipe.tags.map((tag) => (
+                  <Label as='a' tag>{tag}</Label>
+              ))}
+            </Card.Content>
+          </Card>
+          </div>
         </Link>
+
     );
   }
 }

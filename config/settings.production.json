@@ -50,7 +50,7 @@
       "image": "https://www.landolakes.com/RecipeManagementSystem/media/Recipe-Media-Files/Recipes/Retail/x17/16018_Birthday-Party-Mug-Cake_600x600.jpg?ext=.jpg",
       "ingredients": [""],
       "directions": [""],
-      "tags": ["vegan"],
+      "tags": ["vegan", "vegetarian"],
       "creator": "landolakes"
     },
     {
@@ -61,7 +61,7 @@
       "image": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2007/3/6/0/sh0704_cauliflower.jpg.rend.hgtvcom.616.462.suffix/1371585590768.jpeg",
       "ingredients": [""],
       "directions": [""],
-      "tags": ["gluten free"],
+      "tags": ["cheese"],
       "creator":"food.fnr.sndimg"
     },
     {
