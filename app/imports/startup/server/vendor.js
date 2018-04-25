@@ -1,13 +1,24 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
-import { Vendors } from '../../api/vendor/vendor.js';
-import { Users } from '../../api/user/user';
+import { Vendors } from '../../api/vendor/vendor';
+
+function addData(data) {
+  console.log(` Adding: ${data.userName} (${data.owner})`);
+  Vendors.insert(data);
+}
+
+/** Initialize the collection if empty. */
+if (Vendors.find().count() === 0) {
+  if (Meteor.settings.defaultVendors) {
+    console.log('Creating default vendor.');
+    Meteor.settings.defaultVendors.map(data => addData(data));
+  }
+}
 
 /** This subscription publishes only the documents associated with the logged in user */
 Meteor.publish('Vendor', function publish() {
   if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return Vendors.find({ owner: username });
+    return Vendors.find();
   }
   return this.ready();
 });
