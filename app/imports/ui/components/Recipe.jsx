@@ -19,8 +19,8 @@ class Recipe extends React.Component {
               </Card.Description>
             </Card.Content>
             <Card.Content extra>
-              {this.props.recipe.tags.map((tag) => (
-                  <Label tag>{tag}</Label>
+              {this.props.recipe.tags.map((tag, idx) => (
+                  <Label key = {idx} tag>{tag}</Label>
               ))}
             </Card.Content>
           </Card>
