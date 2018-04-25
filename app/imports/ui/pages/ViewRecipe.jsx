@@ -55,5 +55,3 @@ export default withTracker(({ match }) => {
     ready: subscription.ready(),
   };
 })(ViewRecipe);
-
-
