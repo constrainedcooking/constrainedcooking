@@ -8,23 +8,24 @@ class Recipe extends React.Component {
   render() {
     return (
         <Link to={`/viewrecipe/${this.props.recipe._id}`}>
-        <Card centered>
-          <Image src={this.props.recipe.image}/>
-          <Card.Content>
-            <Card.Header centered>
-              {this.props.recipe.name}
-            </Card.Header>
-            <Card.Description>
-              {this.props.recipe.description}
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <Label as='a' tag>
-              {this.props.recipe.tags}
-              </Label>
-          </Card.Content>
-        </Card>
+          <Card centered>
+            <Image src={this.props.recipe.image}/>
+            <Card.Content>
+              <Card.Header centered>
+                {this.props.recipe.name}
+              </Card.Header>
+              <Card.Description>
+                {this.props.recipe.description}
+              </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              {this.props.recipe.tags.map((tag) => (
+                  <Label as='a' tag>{tag}</Label>
+              ))}
+            </Card.Content>
+          </Card>
         </Link>
+
     );
   }
 }
