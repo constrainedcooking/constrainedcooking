@@ -8,10 +8,10 @@ class Recipe extends React.Component {
   render() {
     return (
         <Link to={`/viewrecipe/${this.props.recipe._id}`}>
-          <Card centered>
+          <Card>
             <Image src={this.props.recipe.image}/>
             <Card.Content>
-              <Card.Header centered>
+              <Card.Header>
                 {this.props.recipe.name}
               </Card.Header>
               <Card.Description>
@@ -20,7 +20,7 @@ class Recipe extends React.Component {
             </Card.Content>
             <Card.Content extra>
               {this.props.recipe.tags.map((tag) => (
-                  <Label as='a' tag>{tag}</Label>
+                  <Label tag>{tag}</Label>
               ))}
             </Card.Content>
           </Card>
