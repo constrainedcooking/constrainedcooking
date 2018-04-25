@@ -13,10 +13,20 @@ const RecipeSchema = new SimpleSchema({
   time: Number,
   servings: Number,
   tags: [String],
-  ingredients: {type: Array, optional: false},
+  ingredients: {type: Array, minCount: 1, optional: false},
   'ingredients.$': {type: Object, blackbox: true},
-  directions: [String],
+  directions: {type: Array, minCount: 1},
+  'directions.$': {type: String},
   creator: String,
+}, {
+  clean: {
+    filter: true,
+    autoConvert: true,
+    removeEmptyStrings: true,
+    trimStrings: true,
+    getAutoValues: true,
+    removeNullsFromArrays: true,
+  },
 }, { tracker: Tracker });
 
 /** Attach this schema to the collection. */

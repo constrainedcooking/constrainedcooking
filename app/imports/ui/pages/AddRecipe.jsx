@@ -183,7 +183,7 @@ class AddRecipe extends React.Component {
                 {this.state.tags.map((tag, idx) => (
                     <div>
                       <Form.Group className='tags'>
-                        <Form.Input placeholder='name' value={tag} onChange={this.handleTagChange(idx)}/>
+                        <Form.Input placeholder='vegan' onChange={this.handleTagChange(idx)}/>
                         <Button onClick={this.handleRemoveTag(idx)} size='small'>Remove</Button>
                       </Form.Group>
                     </div>
@@ -203,7 +203,7 @@ class AddRecipe extends React.Component {
                 <Header as="h4">Directions</Header>
                 {this.state.directions.map((direction, idx) => (
                     <div>
-                        <TextArea placeholder='step' value={direction.name} onChange={this.handleDirectionChange(idx)} className='directions'/>
+                        <TextArea placeholder='step' onChange={this.handleDirectionChange(idx)} className='directions'/>
                         <Button onClick={this.handleRemoveDirection(idx)} size='small'>Remove</Button>
                     </div>
                 ))}
