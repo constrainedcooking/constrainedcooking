@@ -30,7 +30,7 @@ class ViewRecipe extends React.Component {
           <div>
             <Header as='h3'>Directions</Header>
             {this.props.recipe.directions.map((step, idx) => (
-                <p>{idx}){step}</p>
+                <p>{idx + 1}){step}</p>
             ))}
           </div>
         </Container>

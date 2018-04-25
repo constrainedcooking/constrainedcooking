@@ -56,8 +56,8 @@
       "time": 15,
       "servings": 1,
       "image": "https://www.landolakes.com/RecipeManagementSystem/media/Recipe-Media-Files/Recipes/Retail/x17/16018_Birthday-Party-Mug-Cake_600x600.jpg?ext=.jpg",
-      "ingredients": [""],
-      "directions": [""],
+      "ingredients": [{"name": "placeholder", "amount": "enough"}],
+      "directions": ["filler"],
       "tags": ["vegan"],
       "creator": "landolakes"
     },
@@ -67,8 +67,8 @@
       "time": 30,
       "servings": 3,
       "image": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2007/3/6/0/sh0704_cauliflower.jpg.rend.hgtvcom.616.462.suffix/1371585590768.jpeg",
-      "ingredients": [""],
-      "directions": [""],
+      "ingredients": [{"name": "placeholder", "amount": "enough"}],
+      "directions": ["filler"],
       "tags": ["gluten free"],
       "creator":"food.fnr.sndimg"
     },
@@ -78,8 +78,8 @@
       "time": 25,
       "servings": 2,
       "image": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2007/7/27/0/SH0812_Spinach_Salad.jpg.rend.hgtvcom.616.462.suffix/1371585552045.jpeg",
-      "ingredients": [""],
-      "directions": [""],
+      "ingredients": [{"name": "placeholder", "amount": "enough"}],
+      "directions": ["filler"],
       "tags": ["vegetarian"],
       "creator":"food.fnr.sndimg"
     },
