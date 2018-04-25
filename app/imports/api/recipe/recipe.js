@@ -12,11 +12,11 @@ const RecipeSchema = new SimpleSchema({
   description: String,
   time: Number,
   servings: Number,
-  tags: [String],
-  ingredients: {type: Array, minCount: 1, optional: false},
-  'ingredients.$': {type: Object, blackbox: true},
-  directions: {type: Array, minCount: 1},
-  'directions.$': {type: String},
+  tags: { type: Array, optional: true }, 'tag.$': { type: String },
+  ingredients: { type: Array, minCount: 1, optional: false },
+  'ingredients.$': { type: Object, blackbox: true },
+  directions: { type: Array, minCount: 1 },
+  'directions.$': { type: String },
   creator: String,
 }, {
   clean: {
