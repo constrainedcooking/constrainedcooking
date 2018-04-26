@@ -1,7 +1,8 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Dropdown, Loader, Menu, Container, Form } from 'semantic-ui-react';
+import { Header, Card, Loader, Menu, Container, Form } from 'semantic-ui-react';
 import { Vendors } from '/imports/api/vendor/vendor';
+import ProfileVendor from '/imports/ui/components/ProfileVendor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Bert } from 'meteor/themeteorchef:bert';
@@ -15,7 +16,6 @@ class ListVendor extends React.Component {
     super(props);
     this.state = {
       userExists: false,
-      userName: '',
       profileView: '',
       userProfile: {
         userName: 'greg_house',
@@ -36,12 +36,7 @@ class ListVendor extends React.Component {
   }
 
   handleSubmit(e, { name }) {
-    let userName = '';
-    if (name === 'dropdown') {
-      userName = this.state.profileView;
-    } else {
-      userName = this.state.userName;
-    }
+    const userName = this.state.profileView;
     const userProfile = this.props.users.find(function (element) {
       return element.userName === userName;
     });
@@ -92,21 +87,18 @@ class ListVendor extends React.Component {
                 <Form.Button content="Submit"/>
               </Form>
             </Menu.Item>
-            {/* search for profiles */}
-            <Menu.Item>
-              <Form name="search" onSubmit={this.handleSubmit}>
-                <Form.Input label="Email"
-                            icon="user"
-                            iconPosition="left"
-                            name="email"
-                            type="email"
-                            placeholder="vendor Username"
-                            onChange={this.handleChange}
-                />
-                <Form.Button content="Submit"/>
-              </Form>
-            </Menu.Item>
           </Menu>
+          <Header inverted as="h2" textAlign="center">Vendor List</Header>
+          <Card.Group>
+            {this.props.users.map((vendor, index) =>
+                <ProfileVendor
+                    key={index}
+                    user={vendor}
+                    size={'small'}
+                    clickable={true}
+                />)
+            }
+          </Card.Group>
         </Container>
     );
   }

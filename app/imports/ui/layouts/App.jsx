@@ -26,6 +26,7 @@ import ProfileListAdmin from '../pages/ProfileListAdmin';
 import ProfileListViewAdmin from '../pages/ProfileListViewAdmin';
 import ListVendor from '../pages/ListVendor';
 import ListVendorView from '../pages/ListVendorView';
+import ListVendorAll_Items from '../pages/ListVendorAll_Items';
 
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
@@ -54,6 +55,7 @@ class App extends React.Component {
               <AdminProtectedRoute path="/profileviewadmin/:_id" component={ProfileListViewAdmin}/>
               <ProtectedRoute path="/vendorList" component={ListVendor}/>
               <ProtectedRoute path="/vendorview/:_id" component={ListVendorView}/>
+              <ProtectedRoute path="/listAllvendors" component={ListVendorAll_Items}/>
               <Route component={NotFound}/>
             </Switch>
             <Footer/>

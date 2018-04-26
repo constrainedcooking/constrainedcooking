@@ -15,6 +15,10 @@ class VendorItem extends React.Component {
           ) : (
               <Table.Cell>Not Available</Table.Cell>
           )}
+          {this.props.showvendor === true ? (
+              <Table.Cell>{this.props.vendor.owner}</Table.Cell>
+          ) : ''
+          }
         </Table.Row>
     );
   }
@@ -23,6 +27,7 @@ class VendorItem extends React.Component {
 /** Require a document to be passed to this component. */
 VendorItem.propTypes = {
   vendor: PropTypes.object.isRequired,
+  showvendor: PropTypes.bool.isRequired,
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */

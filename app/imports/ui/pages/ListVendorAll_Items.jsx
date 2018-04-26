@@ -8,19 +8,24 @@ import VendorItem from '/imports/ui/components/VendorItem';
 import ProfileVendor from '/imports/ui/components/ProfileVendor';
 import { Bert } from 'meteor/themeteorchef:bert';
 import { NavLink, withRouter } from 'react-router-dom';
+import { _ } from 'meteor/underscore';
 
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-class ListVendorView extends React.Component {
+class ListVendorAll_Items extends React.Component {
 
   constructor(props) {
     super(props);
     const allVendors = this.props.users.map(vendor => ({
       key: vendor._id,
-      text: vendor.userName,
-      value: vendor.userName,
-      image: { avatar: true, src: vendor.image },
+      username: vendor.userName,
+      items: vendor.items,
     }));
+    const allItems = this.props.users.map(vendor => ({
+      items: vendor.items,
+    }));
+    _.flatten(allItems, true);
+    _.sortBy(allItems, 'name');
     this.state = {
       email: this.props.profile.userName,
       profileView: this.props.profile.userName,
@@ -35,6 +40,7 @@ class ListVendorView extends React.Component {
       },
       size: 'small',
       allVendors: allVendors,
+      allItem: allItems,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -76,46 +82,23 @@ class ListVendorView extends React.Component {
   renderPage() {
     return (
         <Container>
-          {/* dropdown for profiles */}
-          <Menu>
-            {/* dropdown for profiles */}
-            <Menu.Item>
-              <Form name="dropdown" onSubmit={this.handleSubmit}>
-                <Form.Select name="profileView"
-                             label="Search with dropdown"
-                             placehold='users'
-                             options={this.state.allVendors}
-                             onChange={this.handleChange}
-                />
-                <Form.Button content="Submit"/>
-              </Form>
-            </Menu.Item>
-            <Menu.Item>
-              <ProfileVendor
-                  key={this.state.userProfile._id}
-                  user={this.state.userProfile}
-                  size={'small'}
-                  clickable={false}
-              />
-            </Menu.Item>
-          </Menu>
-          {/* display card for profile */}
           <Header as="h2" textAlign="center">Items Available</Header>
           <Table celled>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Name</Table.HeaderCell>
-                <Table.HeaderCell>Quantity</Table.HeaderCell>
-                <Table.HeaderCell>Condition</Table.HeaderCell>
+                <Table.HeaderCell>Price</Table.HeaderCell>
+                <Table.HeaderCell>Availability</Table.HeaderCell>
+                <Table.HeaderCell>Vendor</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {this.state.userProfile.items.map((item, index) =>
+              {this.state.allItems.items.map((item, index) =>
                   <VendorItem
                       key={index}
                       vendor={item}
-                      showvendor={false}
-                  />)
+                      showvendor={true}
+                />)
               }
             </Table.Body>
           </Table>
@@ -125,7 +108,7 @@ class ListVendorView extends React.Component {
 }
 
 /** Require an array of Stuff documents in the props. */
-ListVendorView.propTypes = {
+ListVendorAll_Items.propTypes = {
   users: PropTypes.array.isRequired,
   profile: PropTypes.object.isRequired,
   ready: PropTypes.bool.isRequired,
@@ -136,6 +119,7 @@ export default withTracker(({ match }) => {
   // Get access to Stuff documents.
   const subscription = Meteor.subscribe('Vendor');
   const documentId = match.params._id;
+  console.log('hello there', Vendors.find({}).fetch());
   if (Vendors.findOne(documentId) === undefined) {
     return {
       profile: {
@@ -155,5 +139,5 @@ export default withTracker(({ match }) => {
     users: Vendors.find({}).fetch(),
     ready: subscription.ready(),
   };
-})(ListVendorView);
+})(ListVendorAll_Items);
 
