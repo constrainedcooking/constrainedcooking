@@ -1,10 +1,16 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class VendorItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onClick = this.onClick.bind(this);
+  }
+  onClick() {
+  }
   render() {
     return (
         <Table.Row>
@@ -16,7 +22,9 @@ class VendorItem extends React.Component {
               <Table.Cell>Not Available</Table.Cell>
           )}
           {this.props.showvendor === true ? (
-              <Table.Cell>{this.props.vendor.vendor}</Table.Cell>
+              <Table.Cell>
+                <Button basic onClick = {this.onClick}>{this.props.vendor.vendor}</Button>
+              </Table.Cell>
           ) : ''
           }
         </Table.Row>

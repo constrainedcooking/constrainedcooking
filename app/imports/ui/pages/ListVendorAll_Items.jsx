@@ -78,7 +78,6 @@ class ListVendorAll_Items extends React.Component {
       vendor.items);
     allItems = allItems.flatten();
     allItems = _.sortBy(allItems, 'name');
-    console.log('fuc', allItems);
     return (
         <Container>
           <Header as="h2" textAlign="center">Items Available</Header>
