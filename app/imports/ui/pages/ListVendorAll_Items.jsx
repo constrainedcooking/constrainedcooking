@@ -21,11 +21,6 @@ class ListVendorAll_Items extends React.Component {
       username: vendor.userName,
       items: vendor.items,
     }));
-    const allItems = this.props.users.map(vendor => ({
-      items: vendor.items,
-    }));
-    _.flatten(allItems, true);
-    _.sortBy(allItems, 'name');
     this.state = {
       email: this.props.profile.userName,
       profileView: this.props.profile.userName,
@@ -40,7 +35,6 @@ class ListVendorAll_Items extends React.Component {
       },
       size: 'small',
       allVendors: allVendors,
-      allItem: allItems,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -80,6 +74,11 @@ class ListVendorAll_Items extends React.Component {
   }
   /** Render the page once subscriptions have been received. */
   renderPage() {
+    let allItems = this.props.users.map((vendor) =>
+      vendor.items);
+    allItems = allItems.flatten();
+    allItems = _.sortBy(allItems, 'name');
+    console.log('fuc', allItems);
     return (
         <Container>
           <Header as="h2" textAlign="center">Items Available</Header>
@@ -93,7 +92,7 @@ class ListVendorAll_Items extends React.Component {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {this.state.allItems.items.map((item, index) =>
+              {allItems.map((item, index) =>
                   <VendorItem
                       key={index}
                       vendor={item}

@@ -16,7 +16,7 @@ class VendorItem extends React.Component {
               <Table.Cell>Not Available</Table.Cell>
           )}
           {this.props.showvendor === true ? (
-              <Table.Cell>{this.props.vendor.owner}</Table.Cell>
+              <Table.Cell>{this.props.vendor.vendor}</Table.Cell>
           ) : ''
           }
         </Table.Row>

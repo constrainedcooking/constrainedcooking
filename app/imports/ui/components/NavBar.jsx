@@ -26,7 +26,7 @@ class NavBar extends React.Component {
         <Menu.Item>
           <Dropdown item text='Vendors'>
             <Dropdown.Menu>
-              <Dropdown.Item as = {NavLink} activeClassName = "" exact to ="/vendorview/none">
+              <Dropdown.Item as = {NavLink} activeClassName = "" exact to ="/listvendor">
                 Search for a vendor
               </Dropdown.Item>
               <Dropdown.Item as = {NavLink} activeClassName = "" exact to ="/listAllvendors">View all Items</Dropdown.Item>
