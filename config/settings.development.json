@@ -1,9 +1,9 @@
 {
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
-    { "email": "john@foo.com", "password": "changeme" },
+    { "email": "john@foo.com", "password": "changeme", "role": "vendor"  },
     { "email": "aidana@hawaii.edu", "password": "a"},
-    { "email": "sakai@hawaii.edu", "password": "b"},
+    { "email": "sakai@hawaii.edu", "password": "b", "role": "vendor" },
     { "email": "food@foo.com", "password": "changeme", "role": "vendor" }
   ],
 
@@ -34,10 +34,10 @@
       "owner" : "john@foo.com"
     },
     {
-    "userName": "vendor", "firstName": "bob", "lastName": "ross",
-    "image": "https://avatars0.githubusercontent.com/u/7494478?s=460&v=4",
-    "restrictions": "kosher",
-    "owner" : "food@foo.com"
+      "userName": "vendor", "firstName": "bob", "lastName": "ross",
+      "image": "https://avatars0.githubusercontent.com/u/7494478?s=460&v=4",
+      "restrictions": "kosher",
+      "owner" : "food@foo.com"
     },
 
     {
@@ -94,5 +94,21 @@
       "tags": ["dessert"],
       "creator":"SORTEDfood"
     }
+  ],
+
+  "defaultVendors": [
+    {
+      "userName": "greg_house", "firstName": "greg", "lastName": "house",
+      "image": "http://ironchefallstars.com/wp-content/uploads/2017/06/c2-1.jpg",
+      "owner" : "john@foo.com",
+      "items": [{"name": "eggs", "price": 2.50, "available": true, "vendor": "john@foo.com", "vendorname": "greg_house"}]
+    },
+    {
+      "userName": "bird", "firstName": "jack", "lastName": "sparrow",
+      "image": "https://avatars0.githubusercontent.com/u/7494478?s=460&v=4",
+      "owner" : "sakai@hawaii.edu",
+      "items": [{"name": "eggs", "price": 2.50, "available": true, "vendor": "sakai@hawaii.edu", "vendorname": "bird"}]
+    }
   ]
+
 }

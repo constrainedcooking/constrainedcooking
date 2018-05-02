@@ -7,9 +7,9 @@ import { withRouter } from 'react-router-dom';
 class ProfileAdmin extends React.Component {
   render() {
     return (
-        <Card centered>
+        <Card centered size={this.props.size}>
           <Header>{this.props.user.owner}</Header>
-          <Image size="medium" src={this.props.user.image } />
+          <Image size={this.props.size} src={this.props.user.image } />
           <Card.Content>
             <Card.Header>
               {this.props.user.userName}
@@ -31,6 +31,7 @@ class ProfileAdmin extends React.Component {
 /** Require a document to be passed to this component. */
 ProfileAdmin.propTypes = {
   user: PropTypes.object.isRequired,
+  size: PropTypes.string.isRequired,
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */

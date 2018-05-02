@@ -1,75 +1,71 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Image, Card, Dropdown, Loader, Menu, Container, Header, Form } from 'semantic-ui-react';
-import { Users } from '/imports/api/user/user';
+import { Image, Card, Table, Loader, Menu, Container, Header, Form } from 'semantic-ui-react';
+import { Vendors } from '/imports/api/vendor/vendor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import ProfileAdmin from '/imports/ui/components/ProfileAdmin';
+import VendorItem from '/imports/ui/components/VendorItem';
+import ProfileVendor from '/imports/ui/components/ProfileVendor';
 import { Bert } from 'meteor/themeteorchef:bert';
 import { NavLink, withRouter } from 'react-router-dom';
 
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-class ProfileListViewAdmin extends React.Component {
+class ListVendorView extends React.Component {
 
   constructor(props) {
     super(props);
-    const allUsers = this.props.users.map(user => ({
-      key: user._id,
-      text: user.owner,
-      value: user.owner,
-      image: { avatar: true, src: user.image },
+    const allVendors = this.props.users.map(vendor => ({
+      key: vendor._id,
+      text: vendor.userName,
+      value: vendor.userName,
+      image: { avatar: true, src: vendor.image },
     }));
     this.state = {
-      emailExists: false,
-      email: '',
+      email: this.props.profile.userName,
+      profileView: this.props.profile.userName,
       userProfile: {
         userName: this.props.profile.userName,
         firstName: this.props.profile.firstName,
         lastName: this.props.profile.lastName,
         image: this.props.profile.image,
-        restrictions: this.props.profile.restrictions,
+        items: this.props.profile.items,
         owner: this.props.profile.owner,
         id: this.props.profile.owner,
       },
-      allUsers: allUsers,
+      size: 'small',
+      allVendors: allVendors,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(e, { name, value }) {
-      this.setState({ [name]: value });
+    this.setState({ [name]: value });
   }
 
   handleSubmit(e, { name }) {
-    let email = '';
-    if (name === 'dropdown') {
-      email = this.state.profileView;
-    } else {
-      email = this.state.email;
-    }
+    const email = this.state.profileView;
     const userProfile = this.props.users.find(function (element) {
-      return element.owner === email;
+      return element.userName === email;
     });
     if (userProfile !== undefined) {
-      if (userProfile.owner !== this.state.userProfile.owner) {
-        this.setState({ emailExists: true });
+      if (userProfile.userName !== this.state.userProfile.userName) {
         this.setState({
           userProfile: {
             userName: userProfile.userName,
             firstName: userProfile.firstName,
             lastName: userProfile.lastName,
             image: userProfile.image,
-            restrictions: userProfile.restrictions,
+            items: userProfile.items,
             owner: userProfile.owner,
             _id: userProfile._id,
           },
         });
       } else {
-        Bert.alert({ type: 'danger', message: 'you are already at that email' });
+        Bert.alert({ type: 'danger', message: 'you are already at that user' });
       }
     } else {
-      Bert.alert({ type: 'danger', message: 'That email does not exist' });
+      Bert.alert({ type: 'danger', message: 'That user does not exist' });
     }
   }
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
@@ -88,36 +84,48 @@ class ProfileListViewAdmin extends React.Component {
                 <Form.Select name="profileView"
                              label="Search with dropdown"
                              placehold='users'
-                             options={this.state.allUsers}
+                             options={this.state.allVendors}
                              onChange={this.handleChange}
                 />
                 <Form.Button content="Submit"/>
               </Form>
             </Menu.Item>
-            {/* search for profiles */}
             <Menu.Item>
-              <Form name="search" onSubmit={this.handleSubmit}>
-                <Form.Input label="Search with email"
-                            icon="user"
-                            iconPosition="left"
-                            name="email"
-                            type="email"
-                            placeholder="E-mail address"
-                            onChange={this.handleChange}
-                />
-                <Form.Button content="Submit"/>
-              </Form>
+              <ProfileVendor
+                  key={this.state.userProfile._id}
+                  user={this.state.userProfile}
+                  size={'small'}
+                  clickable={false}
+              />
             </Menu.Item>
           </Menu>
           {/* display card for profile */}
-          <ProfileAdmin key={this.state.userProfile._id} user={this.state.userProfile} size={'medium'}/>;
+          <Header as="h2" textAlign="center">Items Available</Header>
+          <Table celled>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Name</Table.HeaderCell>
+                <Table.HeaderCell>Quantity</Table.HeaderCell>
+                <Table.HeaderCell>Condition</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {this.state.userProfile.items.map((item, index) =>
+                  <VendorItem
+                      key={index}
+                      vendor={item}
+                      showvendor={false}
+                  />)
+              }
+            </Table.Body>
+          </Table>
         </Container>
     );
   }
 }
 
 /** Require an array of Stuff documents in the props. */
-ProfileListViewAdmin.propTypes = {
+ListVendorView.propTypes = {
   users: PropTypes.array.isRequired,
   profile: PropTypes.object.isRequired,
   ready: PropTypes.bool.isRequired,
@@ -126,26 +134,26 @@ ProfileListViewAdmin.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(({ match }) => {
   // Get access to Stuff documents.
-  const subscription = Meteor.subscribe('UsersAdmin');
+  const subscription = Meteor.subscribe('Vendor');
   const documentId = match.params._id;
-  if (Users.findOne(documentId) === undefined) {
+  if (Vendors.findOne(documentId) === undefined) {
     return {
       profile: {
         userName: 'none',
         firstName: 'none',
         lastName: 'none',
         image: 'https://philipmjohnson.github.io/images/philip2.jpeg',
-        restrictions: 'none',
+        items: [{ name: 'hotdogs', price: 4.20, available: false }],
         owner: 'no profile selected',
       },
-      users: Users.find({}).fetch(),
+      users: Vendors.find({}).fetch(),
       ready: subscription.ready(),
     };
   }
-    return {
-      profile: Users.findOne(documentId),
-      users: Users.find({}).fetch(),
-      ready: subscription.ready(),
-    };
-})(ProfileListViewAdmin);
+  return {
+    profile: Vendors.findOne(documentId),
+    users: Vendors.find({}).fetch(),
+    ready: subscription.ready(),
+  };
+})(ListVendorView);
 

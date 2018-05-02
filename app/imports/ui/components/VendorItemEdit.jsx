@@ -11,23 +11,25 @@ class VendorItem extends React.Component {
     super(props);
     this.state = {
       visitVendor: false,
-      _id: '',
+      itemname: '',
+      price: '',
+      available: '',
     };
     this.onClick = this.onClick.bind(this);
   }
   onClick() {
-    const userProfile = Vendors.find({ owner: this.props.vendor.vendor }).fetch();
-    // console.log('vendoritem', userProfile);
-    if (userProfile[0] !== undefined) {
       this.setState({ visitVendor: true });
-      this.setState({ _id: userProfile[0]._id });
-    } else {
-      Bert.alert({ type: 'danger', message: 'That user does not exist' });
+      this.setState({ itemname: this.props.vendor.name });
+      this.setState({ price: this.props.vendor.price });
+      if (this.props.vendor.available) {
+        this.setState({ available: 'true' });
+      } else {
+        this.setState({ available: 'false' });
+      }
     }
-  }
   render() {
     if (this.state.visitVendor === true) {
-      return <Redirect to={`/vendorview/${this.state._id}`}/>;
+      return <Redirect to={`/vendoredit/${this.state.itemname}_${this.state.price}_${this.state.available}`}/>;
     }
     return (
         <Table.Row>
@@ -38,12 +40,9 @@ class VendorItem extends React.Component {
           ) : (
               <Table.Cell>Not Available</Table.Cell>
           )}
-          {this.props.showvendor === true ? (
               <Table.Cell>
-                <Button basic onClick = {this.onClick} >{this.props.vendor.vendorname}</Button>
+                <Button basic onClick = {this.onClick} >Edit</Button>
               </Table.Cell>
-          ) : ''
-          }
         </Table.Row>
     );
   }
@@ -52,7 +51,6 @@ class VendorItem extends React.Component {
 /** Require a document to be passed to this component. */
 VendorItem.propTypes = {
   vendor: PropTypes.object.isRequired,
-  showvendor: PropTypes.bool.isRequired,
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */
