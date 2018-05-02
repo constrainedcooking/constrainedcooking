@@ -86,7 +86,7 @@ class ListVendorAll_Items extends React.Component {
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Name</Table.HeaderCell>
-                <Table.HeaderCell>Price</Table.HeaderCell>
+                <Table.HeaderCell>Price (U.S Dollars)</Table.HeaderCell>
                 <Table.HeaderCell>Availability</Table.HeaderCell>
                 <Table.HeaderCell>Vendor</Table.HeaderCell>
               </Table.Row>

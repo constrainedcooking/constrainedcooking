@@ -30,7 +30,9 @@ class NavBar extends React.Component {
                 Search for a vendor
               </Dropdown.Item>
               <Dropdown.Item as = {NavLink} activeClassName = "" exact to ="/listAllvendors">View all Items</Dropdown.Item>
-              <Dropdown.Item as = {NavLink} activeClassName = "" exact to ="/addvendoritem">Add/Update Items</Dropdown.Item>
+              {Roles.userIsInRole(Meteor.userId(), 'vendor') ? (
+                <Dropdown.Item as = {NavLink} activeClassName = "" exact to ="/addvendoritem">Add/Update Items</Dropdown.Item>
+                  ) : ''}
               <Dropdown.Item>Others</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>

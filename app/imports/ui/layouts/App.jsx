@@ -42,7 +42,7 @@ class App extends React.Component {
               <Route path="/signup" component={Signup}/>
               <Route path="/list" component={ListRecipes}/>
               <ProtectedRoute path="/add" component={AddStuff}/>
-              <ProtectedRoute path="/addvendoritem" component={AddVendorItem}/>
+              <VendorProtectedRoute path="/addvendoritem" component={AddVendorItem}/>
               <ProtectedRoute path="/listvendor" component={ListVendor}/>
               <ProtectedRoute path="/addrecipe" component={AddRecipe}/>
               <ProtectedRoute path="/editprofile/:_id" component={ProfileEdit}/>
@@ -56,7 +56,7 @@ class App extends React.Component {
               <ProtectedRoute path="/vendorList" component={ListVendor}/>
               <ProtectedRoute path="/vendorview/:_id" component={ListVendorView}/>
               <ProtectedRoute path="/listAllvendors" component={ListVendorAll_Items}/>
-              <ProtectedRoute path="/vendoredit/:_id" component={EditVendorItem}/>
+              <VendorProtectedRoute path="/vendoredit/:_id" component={EditVendorItem}/>
               <Route component={NotFound}/>
             </Switch>
             <Footer/>
