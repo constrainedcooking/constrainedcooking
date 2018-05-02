@@ -56,6 +56,7 @@ class App extends React.Component {
               <ProtectedRoute path="/vendorList" component={ListVendor}/>
               <ProtectedRoute path="/vendorview/:_id" component={ListVendorView}/>
               <ProtectedRoute path="/listAllvendors" component={ListVendorAll_Items}/>
+              <ProtectedRoute path="/vendoredit/:_id" component={EditVendorItem}/>
               <Route component={NotFound}/>
             </Switch>
             <Footer/>

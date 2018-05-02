@@ -6,7 +6,7 @@ import ProfileVendor from '/imports/ui/components/ProfileVendor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Bert } from 'meteor/themeteorchef:bert';
-import { NavLink, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ListVendor extends React.Component {

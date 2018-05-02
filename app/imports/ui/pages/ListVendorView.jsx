@@ -143,7 +143,7 @@ export default withTracker(({ match }) => {
         firstName: 'none',
         lastName: 'none',
         image: 'https://philipmjohnson.github.io/images/philip2.jpeg',
-        items: [{ name: 'eggs', price: 2.50, available: false }],
+        items: [{ name: 'hotdogs', price: 4.20, available: false }],
         owner: 'no profile selected',
       },
       users: Vendors.find({}).fetch(),

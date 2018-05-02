@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Image, Card, Table, Loader, Menu, Container, Header, Form } from 'semantic-ui-react';
+import { Table, Loader, Container, Header } from 'semantic-ui-react';
 import { Vendors } from '/imports/api/vendor/vendor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -78,6 +78,7 @@ class ListVendorAll_Items extends React.Component {
       vendor.items);
     allItems = allItems.flatten();
     allItems = _.sortBy(allItems, 'name');
+   // console.log('fuck...', this.props.users);
     return (
         <Container>
           <Header as="h2" textAlign="center">Items Available</Header>
@@ -117,7 +118,6 @@ export default withTracker(({ match }) => {
   // Get access to Stuff documents.
   const subscription = Meteor.subscribe('Vendor');
   const documentId = match.params._id;
-  console.log('hello there', Vendors.find({}).fetch());
   if (Vendors.findOne(documentId) === undefined) {
     return {
       profile: {
