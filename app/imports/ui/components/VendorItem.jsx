@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button } from 'semantic-ui-react';
+import { Table, Button, Icon } from 'semantic-ui-react';
 import { Vendors } from '/imports/api/vendor/vendor';
 import PropTypes from 'prop-types';
 import { Bert } from 'meteor/themeteorchef:bert';
@@ -29,18 +29,25 @@ class VendorItem extends React.Component {
     if (this.state.visitVendor === true) {
       return <Redirect to={`/vendorview/${this.state._id}`}/>;
     }
+    const availableStyle = { color: 'blue' };
+    const notavailableStyle = { color: 'red' };
     return (
         <Table.Row>
           <Table.Cell>{this.props.vendor.name}</Table.Cell>
           <Table.Cell>{this.props.vendor.price}</Table.Cell>
           {this.props.vendor.available === true ? (
-              <Table.Cell>Available</Table.Cell>
+              <Table.Cell style={availableStyle}>Available</Table.Cell>
           ) : (
-              <Table.Cell>Not Available</Table.Cell>
+              <Table.Cell style={notavailableStyle}>Not Available</Table.Cell>
           )}
           {this.props.showvendor === true ? (
               <Table.Cell>
-                <Button basic onClick = {this.onClick} >{this.props.vendor.vendorname}</Button>
+                <Button animated onClick = {this.onClick} color='green'>
+                  <Button.Content visible>{this.props.vendor.vendorname}</Button.Content>
+                  <Button.Content hidden>
+                    <Icon name='right arrow' />
+                  </Button.Content>
+                </Button>
               </Table.Cell>
           ) : ''
           }

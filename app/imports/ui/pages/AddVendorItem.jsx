@@ -70,6 +70,10 @@ class AddVendorItem extends React.Component {
     let allItems = this.props.vendoraccount[0].items;
     allItems = allItems.flatten();
     allItems = _.sortBy(allItems, 'name');
+    const editHeader = { background: 'green', color: 'whitesmoke' };
+    const availHeader = { background: 'turquoise', color: 'whitesmoke' };
+    const priceHeader = { background: 'silver', color: 'whitesmoke' };
+    const nameHeader = { background: 'orange', color: 'whitesmoke' };
     return (
         <Container>
           <Grid container centered columns={2}>
@@ -86,7 +90,7 @@ class AddVendorItem extends React.Component {
                             placeholder="price"
                             onChange={this.handleChange}
                 />
-                <Form.Button content="Submit"/>
+                <Form.Button content="Add Item"/>
               </Form>
             </Grid.Column>
           </Grid>
@@ -94,10 +98,10 @@ class AddVendorItem extends React.Component {
           <Table celled>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>Name</Table.HeaderCell>
-                <Table.HeaderCell>Price</Table.HeaderCell>
-                <Table.HeaderCell>Availability</Table.HeaderCell>
-                <Table.HeaderCell>Update Item</Table.HeaderCell>
+                <Table.HeaderCell style ={nameHeader} textAlign='center'>Name</Table.HeaderCell>
+                <Table.HeaderCell style ={priceHeader} textAlign='center'>Price (U.S Dollars)</Table.HeaderCell>
+                <Table.HeaderCell style ={availHeader} textAlign='center'>Availability</Table.HeaderCell>
+                <Table.HeaderCell style ={editHeader} textAlign='center'>Update Item</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>

@@ -74,6 +74,9 @@ class ListVendorView extends React.Component {
   }
   /** Render the page once subscriptions have been received. */
   renderPage() {
+    const availHeader = { background: 'turquoise', color: 'whitesmoke' };
+    const priceHeader = { background: 'silver', color: 'whitesmoke' };
+    const nameHeader = { background: 'orange', color: 'whitesmoke' };
     return (
         <Container>
           {/* dropdown for profiles */}
@@ -104,9 +107,9 @@ class ListVendorView extends React.Component {
           <Table celled>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>Name</Table.HeaderCell>
-                <Table.HeaderCell>Quantity</Table.HeaderCell>
-                <Table.HeaderCell>Condition</Table.HeaderCell>
+                <Table.HeaderCell style={nameHeader} textAlign='center'>Name</Table.HeaderCell>
+                <Table.HeaderCell style={priceHeader} textAlign='center'>Quantity</Table.HeaderCell>
+                <Table.HeaderCell style={availHeader} textAlign='center'>Condition</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>

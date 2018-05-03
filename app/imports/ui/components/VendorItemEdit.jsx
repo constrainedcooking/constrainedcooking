@@ -31,14 +31,16 @@ class VendorItem extends React.Component {
     if (this.state.visitVendor === true) {
       return <Redirect to={`/vendoredit/${this.state.itemname}_${this.state.price}_${this.state.available}`}/>;
     }
+    const availableStyle = { color: 'blue' };
+    const notavailableStyle = { color: 'red' };
     return (
         <Table.Row>
           <Table.Cell>{this.props.vendor.name}</Table.Cell>
           <Table.Cell>{this.props.vendor.price}</Table.Cell>
           {this.props.vendor.available === true ? (
-              <Table.Cell>Available</Table.Cell>
+              <Table.Cell style={availableStyle}>Available</Table.Cell>
           ) : (
-              <Table.Cell>Not Available</Table.Cell>
+              <Table.Cell style={notavailableStyle}>Not Available</Table.Cell>
           )}
               <Table.Cell>
                 <Button basic onClick = {this.onClick} >Edit</Button>

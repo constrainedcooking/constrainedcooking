@@ -74,21 +74,23 @@ class ListVendorAll_Items extends React.Component {
   }
   /** Render the page once subscriptions have been received. */
   renderPage() {
-    let allItems = this.props.users.map((vendor) =>
-      vendor.items);
+    let allItems = this.props.users.map((vendor) => vendor.items);
     allItems = allItems.flatten();
     allItems = _.sortBy(allItems, 'name');
-   // console.log('fuck...', this.props.users);
+    const vendorHeader = { background: 'green', color: 'whitesmoke' };
+    const availHeader = { background: 'turquoise', color: 'whitesmoke' };
+    const priceHeader = { background: 'silver', color: 'whitesmoke' };
+    const nameHeader = { background: 'orange', color: 'whitesmoke' };
     return (
         <Container>
           <Header as="h2" textAlign="center">Items Available</Header>
           <Table celled>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>Name</Table.HeaderCell>
-                <Table.HeaderCell>Price (U.S Dollars)</Table.HeaderCell>
-                <Table.HeaderCell>Availability</Table.HeaderCell>
-                <Table.HeaderCell>Vendor</Table.HeaderCell>
+                <Table.HeaderCell style ={nameHeader} textAlign='center'>Name</Table.HeaderCell>
+                <Table.HeaderCell style ={priceHeader} textAlign='center'>Price (U.S Dollars)</Table.HeaderCell>
+                <Table.HeaderCell style ={availHeader} textAlign='center'>Availability</Table.HeaderCell>
+                <Table.HeaderCell style={vendorHeader} textAlign='center'>Vendor</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
