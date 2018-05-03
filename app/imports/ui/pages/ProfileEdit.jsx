@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Loader, Header, Segment } from 'semantic-ui-react';
 import { Users, UserSchema } from '/imports/api/user/user';
+import { Vendors } from '/imports/api/vendor/vendor';
 import { Bert } from 'meteor/themeteorchef:bert';
 import AutoForm from 'uniforms-semantic/AutoForm';
 import TextField from 'uniforms-semantic/TextField';
@@ -11,6 +12,8 @@ import ErrorsField from 'uniforms-semantic/ErrorsField';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import { Roles } from 'meteor/alanning:roles';
+
 
 /** Renders the Page for editing a single document. */
 class ProfileEdit extends React.Component {
@@ -21,6 +24,14 @@ class ProfileEdit extends React.Component {
      Users.update(_id, { $set: { userName, firstName, lastName, restrictions, image } }, (error) => (error ?
          Bert.alert({ type: 'danger', message: `Update failed: ${error.message}` }) :
          Bert.alert({ type: 'success', message: 'Update succeeded' })));
+
+     if (Roles.userIsInRole(Meteor.userId(), 'vendor')) {
+       const isVendor = Vendors.find({ owner: Meteor.user().username }).fetch();
+       Vendors.update(isVendor[0]._id, { $set: { userName: userName, firstName: firstName, lastName: lastName, image: image } }, (error) => (error ?
+           Bert.alert({ type: 'danger', message: `Update failed: ${error.message}` }) :
+           Bert.alert({ type: 'success', message: 'Update succeeded' })));
+
+     }
    }
 
 
@@ -40,7 +51,7 @@ class ProfileEdit extends React.Component {
               <Segment>
                 <TextField name='firstName'/>
                 <TextField name='lastName'/>
-                <TextField name='userName'/>
+                <TextField name='userName' value={this.props.doc.userName}/>
                 <TextField name='image'/>
                 <SelectField name='restrictions'/>
                 <SubmitField value='Submit'/>
@@ -67,9 +78,9 @@ export default withTracker(({ match }) => {
   const documentId = match.params._id;
   // Get access to Stuff documents.
   const subscription = Meteor.subscribe('Users');
-  console.log('got here');
+  const subscription2 = Meteor.subscribe('Vendor');
   return {
     doc: Users.findOne(documentId),
-    ready: subscription.ready(),
+    ready: (subscription.ready() && subscription2.ready()),
   };
 })(ProfileEdit);
