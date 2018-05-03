@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Image, Card, Table, Loader, Menu, Container, Header, Form } from 'semantic-ui-react';
+import { Image, Card, Table, Loader, Grid, Container, Header, Form } from 'semantic-ui-react';
 import { Vendors } from '/imports/api/vendor/vendor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -77,12 +77,13 @@ class ListVendorView extends React.Component {
     const availHeader = { background: 'turquoise', color: 'whitesmoke' };
     const priceHeader = { background: 'silver', color: 'whitesmoke' };
     const nameHeader = { background: 'orange', color: 'whitesmoke' };
+    const searchBarWidth = { width: '250px' };
     return (
         <Container>
           {/* dropdown for profiles */}
-          <Menu>
+          <Grid container columns={2}>
             {/* dropdown for profiles */}
-            <Menu.Item>
+            <Grid.Column style={searchBarWidth}>
               <Form name="dropdown" onSubmit={this.handleSubmit}>
                 <Form.Select name="profileView"
                              label="Search with dropdown"
@@ -92,18 +93,19 @@ class ListVendorView extends React.Component {
                 />
                 <Form.Button content="Submit"/>
               </Form>
-            </Menu.Item>
-            <Menu.Item>
+            </Grid.Column>
+            <Grid.Column>
               <ProfileVendor
                   key={this.state.userProfile._id}
                   user={this.state.userProfile}
                   size={'small'}
                   clickable={false}
+                  colorvisible={false}
               />
-            </Menu.Item>
-          </Menu>
+            </Grid.Column>
+          </Grid>
           {/* display card for profile */}
-          <Header as="h2" textAlign="center">Items Available</Header>
+          <Header as="h2" textAlign="center">{this.state.userProfile.userName}</Header>
           <Table celled>
             <Table.Header>
               <Table.Row>

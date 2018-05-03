@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Header, Card, Loader, Menu, Container, Form } from 'semantic-ui-react';
+import { Header, Card, Loader, Grid, Container, Form } from 'semantic-ui-react';
 import { Vendors } from '/imports/api/vendor/vendor';
 import ProfileVendor from '/imports/ui/components/ProfileVendor';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -72,11 +72,12 @@ class ListVendor extends React.Component {
       value: user.userName,
       image: { avatar: true, src: user.image },
     }));
+    const searchBarWidth = { width: '250px' };
     return (
         <Container>
-          <Menu>
+          <Grid centered>
             {/* dropdown for profiles */}
-            <Menu.Item>
+            <Grid.Column style={searchBarWidth}>
               <Form name="dropdown" onSubmit={this.handleSubmit}>
                 <Form.Select name="profileView"
                              label="Search with dropdown"
@@ -86,9 +87,9 @@ class ListVendor extends React.Component {
                 />
                 <Form.Button content="Submit"/>
               </Form>
-            </Menu.Item>
-          </Menu>
-          <Header inverted as="h2" textAlign="center">Vendor List</Header>
+            </Grid.Column>
+          </Grid>
+          <Header textAlign="center">Vendor List</Header>
           <Card.Group>
             {this.props.users.map((vendor, index) =>
                 <ProfileVendor
@@ -96,6 +97,7 @@ class ListVendor extends React.Component {
                     user={vendor}
                     size={'small'}
                     clickable={true}
+                    colorvisible={true}
                 />)
             }
           </Card.Group>
