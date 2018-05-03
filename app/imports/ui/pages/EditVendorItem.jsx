@@ -84,7 +84,7 @@ class EditVendorItem extends React.Component {
       { key: 2, text: 'not available', value: 'false' },
     ];
     return (
-        <Grid container columns={2}>
+        <Grid container centered columns={2}>
           <Grid.Column>
             <Header as="h2" textAlign="center">Edit Item</Header>
             <Form ref={(ref) => { this.formRef = ref; }} onSubmit={this.handleSubmit}>
@@ -102,7 +102,7 @@ class EditVendorItem extends React.Component {
               />
               <Form.Select name="availability"
                            options={availableOptions}
-                           label="Search with dropdown"
+                           label="availability"
                            placehold='users'
                            onChange={this.handleChange}
               />
@@ -111,7 +111,7 @@ class EditVendorItem extends React.Component {
           </Grid.Column>
           <Grid.Column>
             <Header as="h2" textAlign="center">Delete Item</Header>
-            <Button basic onClick = {this.onClick} >delete item</Button>
+            <Button onClick = {this.onClick} color='red' size='huge'>delete item</Button>
           </Grid.Column>
         </Grid>
     );

@@ -43,7 +43,7 @@ class ListVendorView extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleSubmit(e, { name }) {
+  handleSubmit() {
     const email = this.state.profileView;
     const userProfile = this.props.users.find(function (element) {
       return element.userName === email;
@@ -110,8 +110,8 @@ class ListVendorView extends React.Component {
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell style={nameHeader} textAlign='center'>Name</Table.HeaderCell>
-                <Table.HeaderCell style={priceHeader} textAlign='center'>Quantity</Table.HeaderCell>
-                <Table.HeaderCell style={availHeader} textAlign='center'>Condition</Table.HeaderCell>
+                <Table.HeaderCell style={priceHeader} textAlign='center'>Price (U.S Dollars)</Table.HeaderCell>
+                <Table.HeaderCell style={availHeader} textAlign='center'>Availability</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>

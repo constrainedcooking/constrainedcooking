@@ -2,9 +2,12 @@
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
     { "email": "john@foo.com", "password": "changeme", "role": "vendor"  },
-    { "email": "aidana@hawaii.edu", "password": "a"},
+    { "email": "aidna@phenix.edu", "password": "a", "role": "vendor"  },
     { "email": "sakai@hawaii.edu", "password": "b", "role": "vendor" },
-    { "email": "food@foo.com", "password": "changeme", "role": "vendor" }
+    { "email": "food@foo.com", "password": "changeme", "role": "vendor" },
+    { "email": "bobby@flay.com", "password": "changeme", "role": "vendor" },
+    { "email": "steve_123@google.com", "password": "changeme", "role": "vendor" },
+    { "email": "allon@food.com", "password": "changeme", "role": "vendor" }
   ],
 
   "defaultData": [
@@ -16,13 +19,13 @@
 
   "defaultUsers": [
     {
-      "userName": "Dog_the_bount_hunter", "firstName": "Bobby", "lastName": "Flay",
+      "userName": "rock", "firstName": "dane", "lastName": "jensen",
       "image": "https://food.fnr.sndimg.com/content/dam/images/food/editorial/talent/bobby-flay/FN-TalentAvatar-Bobby-Flay-800x800.jpg.rend.hgtvcom.616.616.suffix/1458077863338.jpeg",
       "restrictions": "none",
-      "owner" : "aidana@hawaii.edu"
+      "owner" : "aidna@phenix.edu"
     },
     {
-      "userName": "Jack_Sparrow", "firstName": "Hiroyuki", "lastName": "Sakai",
+      "userName": "Jack_Sprow", "firstName": "Hiroyuki", "lastName": "Sakai",
       "image": "https://philipmjohnson.github.io/images/philip2.jpeg",
       "restrictions": "none",
       "owner" : "sakai@hawaii.edu"
@@ -34,8 +37,8 @@
       "owner" : "john@foo.com"
     },
     {
-      "userName": "vendor", "firstName": "bob", "lastName": "ross",
-      "image": "https://avatars0.githubusercontent.com/u/7494478?s=460&v=4",
+      "userName": "owl", "firstName": "henry", "lastName": "listly",
+      "image": "http://www.behindthevoiceactors.com/_img/chars/soren-legend-of-the-guardians-the-owls-of-gahoole-9.25.jpg",
       "restrictions": "kosher",
       "owner" : "food@foo.com"
     },
@@ -45,6 +48,24 @@
       "image": "https://avatars0.githubusercontent.com/u/7494478?s=460&v=4",
       "restrictions": "kosher",
       "owner" : "admin@foo.com"
+    },
+    {
+      "userName": "super_chef", "firstName": "mario", "lastName": "morimoto",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/0/03/Vulpes_vulpes_laying_in_snow.jpg",
+      "restrictions": "kosher",
+      "owner" : "bobby@flay.com"
+    },
+    {
+      "userName": "i_phons", "firstName": "steve", "lastName": "kobs",
+      "image": "https://ss7.vzw.com/is/image/VerizonWireless/iphone-x-kf-device-tab-d-3-retina?$pngalpha$&scl=1",
+      "restrictions": "kosher",
+      "owner" : "steve_123@google.com"
+    },
+    {
+      "userName": "prodigy", "firstName": "steve", "lastName": "kobs",
+      "image": "https://occ-0-2433-448.1.nflxso.net/art/70ca4/a4f281c8b0db74f8c09cb25c05647a59c2070ca4.jpg",
+      "restrictions": "kosher",
+      "owner" : "allon@food.com"
     }
   ],
 
@@ -101,14 +122,74 @@
       "userName": "greg_house", "firstName": "greg", "lastName": "house",
       "image": "http://ironchefallstars.com/wp-content/uploads/2017/06/c2-1.jpg",
       "owner" : "john@foo.com",
-      "items": [{"name": "eggs", "price": 2.50, "available": true, "vendor": "john@foo.com", "vendorname": "greg_house"}]
+      "items": [{"name": "eggs", "price": 2.50, "available": true, "vendor": "john@foo.com", "vendorname": "greg_house"},
+        {"name": "ribs", "price": 4.50, "available": true, "vendor": "john@foo.com", "vendorname": "greg_house"},
+        {"name": "ribeye", "price": 10.99, "available": true, "vendor": "john@foo.com", "vendorname": "greg_house"},
+        {"name": "chicken breast", "price": 6.50, "available": true, "vendor": "john@foo.com", "vendorname": "greg_house"},
+        {"name": "chicken feet", "price": 12.75, "available": true, "vendor": "john@foo.com", "vendorname": "greg_house"}]
     },
     {
-      "userName": "bird", "firstName": "jack", "lastName": "sparrow",
-      "image": "https://avatars0.githubusercontent.com/u/7494478?s=460&v=4",
+      "userName": "Jack_Sprow", "firstName": "hiryuki", "lastName": "sakai",
+      "image": "https://philipmjohnson.github.io/images/philip2.jpeg",
       "owner" : "sakai@hawaii.edu",
-      "items": [{"name": "eggs", "price": 2.50, "available": true, "vendor": "sakai@hawaii.edu", "vendorname": "bird"}]
+      "items": [{"name": "celery", "price": 0.50, "available": true, "vendor": "sakai@hawaii.edu", "vendorname": "bird"},
+        {"name": "carrot", "price": 0.30, "available": true, "vendor": "sakai@hawaii.edu", "vendorname": "bird"},
+        {"name": "beans", "price": 0.25, "available": true, "vendor": "sakai@hawaii.edu", "vendorname": "bird"},
+        {"name": "eggplant", "price": 0.60, "available": true, "vendor": "sakai@hawaii.edu", "vendorname": "bird"},
+        {"name": "green onions", "price": 0.70, "available": true, "vendor": "sakai@hawaii.edu", "vendorname": "bird"},
+        {"name": "tomato", "price": 0.50, "available": true, "vendor": "sakai@hawaii.edu", "vendorname": "bird"}]
+    },
+    {
+      "userName": "owl", "firstName": "henry", "lastName": "listly",
+      "image": "http://www.behindthevoiceactors.com/_img/chars/soren-legend-of-the-guardians-the-owls-of-gahoole-9.25.jpg",
+      "owner" : "food@foo.com",
+      "items": [{"name": "chow fun", "price": 1.25, "available": true, "vendor": "food@foo.com", "vendorname": "owl"},
+        {"name": "chow mein", "price": 1.25, "available": true, "vendor": "food@foo.com", "vendorname": "owl"},
+        {"name": "soba", "price": 1.25, "available": true, "vendor": "food@foo.com", "vendorname": "owl"},
+        {"name": "pancit", "price": 1.25, "available": true, "vendor": "food@foo.com", "vendorname": "owl"},
+        {"name": "rice noodles", "price": 1.25, "available": true, "vendor": "food@foo.com", "vendorname": "owl"}]
+    },
+    {
+      "userName": "rock", "firstName": "dane", "lastName": "jensen",
+      "image": "https://food.fnr.sndimg.com/content/dam/images/food/editorial/talent/bobby-flay/FN-TalentAvatar-Bobby-Flay-800x800.jpg.rend.hgtvcom.616.616.suffix/1458077863338.jpeg",
+      "owner" : "aidna@phenix.edu",
+      "items": [{"name": "pork belly", "price": 2.60, "available": true, "vendor": "aidna@phenix.edu", "vendorname": "the_rock"},
+        {"name": "spare ribs", "price": 3.50, "available": true, "vendor": "aidna@phenix.edu", "vendorname": "the_rock"},
+        {"name": "pork cultlet", "price": 5.50, "available": true, "vendor": "aidna@phenix.edu", "vendorname": "the_rock"},
+        {"name": "ground pork", "price": 1.75, "available": true, "vendor": "aidna@phenix.edu", "vendorname": "the_rock"},
+        {"name": "pigs feet", "price": 3.25, "available": true, "vendor": "aidna@phenix.edu", "vendorname": "the_rock"}]
+    },
+    {
+      "userName": "super_chef", "firstName": "mario", "lastName": "morimoto",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/0/03/Vulpes_vulpes_laying_in_snow.jpg",
+      "owner" : "bobby@flay.com",
+      "items": [{"name": "salmon bones", "price": 1.75, "available": true, "vendor": "bobby@flay.com", "vendorname": "super_chef"},
+        {"name": "salmon filet", "price": 4.25, "available": true, "vendor": "bobby@flay.com", "vendorname": "super_chef"},
+        {"name": "salmon roe", "price": 6.75, "available": true, "vendor": "bobby@flay.com", "vendorname": "super_chef"},
+        {"name": "mahi mahi", "price": 4.50, "available": true, "vendor": "bobby@flay.com", "vendorname": "super_chef"},
+        {"name": "shutome", "price": 5.00, "available": true, "vendor": "bobby@flay.com", "vendorname": "super_chef"}]
+    },
+    {
+      "userName": "i_phons", "firstName": "steve", "lastName": "kobs",
+      "image": "https://ss7.vzw.com/is/image/VerizonWireless/iphone-x-kf-device-tab-d-3-retina?$pngalpha$&scl=1",
+      "owner" : "steve_123@google.com",
+      "items": [{"name": "romain lettuce", "price": 2.50, "available": true, "vendor": "steve_123@google.com", "vendorname": "i_phons"},
+        {"name": "anuenue lettuce", "price": 2.75, "available": true, "vendor": "steve_123@google.com", "vendorname": "i_phons"},
+        {"name": "manoa lettuce", "price": 4.50, "available": true, "vendor": "steve_123@google.com", "vendorname": "i_phons"},
+        {"name": "red lettuce", "price": 3.50, "available": true, "vendor": "steve_123@google.com", "vendorname": "i_phons"},
+        {"name": "cucumber", "price": 1.25, "available": true, "vendor": "steve_123@google.com", "vendorname": "i_phons"}]
+    },
+    {
+      "userName": "prodigy", "firstName": "steve", "lastName": "kobs",
+      "image": "https://occ-0-2433-448.1.nflxso.net/art/70ca4/a4f281c8b0db74f8c09cb25c05647a59c2070ca4.jpg",
+      "owner" : "allon@food.com",
+      "items": [{"name": "eggs", "price": 2.50, "available": true, "vendor": "allon@food.com", "vendorname": "prodigy"},
+        {"name": "parley", "price": 3.50, "available": true, "vendor": "allon@food.com", "vendorname": "prodigy"},
+        {"name": "oregano", "price": 3.50, "available": true, "vendor": "allon@food.com", "vendorname": "prodigy"},
+        {"name": "basil", "price": 3.75, "available": true, "vendor": "allon@food.com", "vendorname": "prodigy"},
+        {"name": "mint", "price": 3.25, "available": true, "vendor": "allon@food.com", "vendorname": "prodigy"}]
     }
+
   ]
 
 }
