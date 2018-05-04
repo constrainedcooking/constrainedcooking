@@ -59,7 +59,7 @@ class ListRecipes extends React.Component {
                 {...this.props}
             />
           <br></br>
-          <Card.Group>
+          <Card.Group centered itemsPerRow = {4}>
             {this.props.recipes.map((recipe, index) => <Recipe key={index} recipe={recipe}/>)}
           </Card.Group>
         </Container>
