@@ -4,36 +4,33 @@ import { Meteor } from 'meteor/meteor';
 import { Container, Table, Header, Loader, Card, Search, Grid } from 'semantic-ui-react';
 import { Recipes } from '/imports/api/recipe/recipe';
 import { withTracker } from 'meteor/react-meteor-data';
-import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Recipe from '/imports/ui/components/Recipe';
+import { Redirect } from 'react-router-dom';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ListRecipes extends React.Component {
   componentWillMount() {
-    this.resetComponent()
+    this.resetComponent();
   }
-
   resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
 
-  handleResultSelect = (e, { result }) => this.setState({ value: result.title })
-
-  onClick = (e, { result }) =>  <Link to={`/viewrecipe/${result._id}`}>
+  handleResultSelect = (e, { result }) => this.setState({ findRecipe: true, result })
 
   handleSearchChange = (e, { value }) => {
-    this.setState({ isLoading: true, value })
+    this.setState({ isLoading: true, value });
 
     setTimeout(() => {
-      if (this.state.value.length < 1) return this.resetComponent()
+      if (this.state.value.length < 1) return this.resetComponent();
 
-      const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-      const isMatch = result => re.test(result.name)
+      const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
+      const isMatch = result => re.test(result.name);
 
       this.setState({
         isLoading: false,
         results: _.filter(this.props.recipes, isMatch),
-      })
-    }, 300)
+      });
+    }, 300);
   }
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
@@ -43,7 +40,12 @@ class ListRecipes extends React.Component {
 
   /** Render the page once subscriptions have been received. */
   renderPage() {
+    if (this.state.findRecipe) {
+      return <Redirect to={`/viewrecipe/${this.state.result._id}`}/>;
+    }
+
     const { isLoading, value, results } = this.state;
+
     return (
         <Container cover>
           <Header as="h1"
@@ -54,7 +56,6 @@ class ListRecipes extends React.Component {
                 onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
                 results={results}
                 value={value}
-                onClick = {this.onClick}
                 {...this.props}
             />
           <br></br>
