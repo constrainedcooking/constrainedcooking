@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Loader, Header, Image, List } from 'semantic-ui-react';
+import { Container, Loader, Header, Image, List, Grid } from 'semantic-ui-react';
 import { Recipes } from '/imports/api/recipe/recipe';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -17,22 +17,50 @@ class ViewRecipe extends React.Component {
   renderPage() {
     return (
         <Container>
-        <Header as="h1">{this.props.recipe.name}</Header>
-          <div>
-            <Image src={this.props.recipe.image}/>
-            <Header as='h3'>Ingredients</Header>
-            <List>
-              {this.props.recipe.ingredients.map((ingredient, idx) =>(
-                  <List.Item key={idx} >{ingredient['amount']}  {ingredient['name']}</List.Item>  //add ingredient vendor cross-ref here
+          <Grid columns={3}>
+            <Grid.Row>
+              <Grid.Column textAlign='center'>
+                <Header as="h1" centered>{this.props.recipe.name}</Header>
+                <Header as='h3'>Ingredients</Header>
+                <List celled>
+                  {this.props.recipe.ingredients.map((ingredient, idx) => (
+                      <List.Item key={idx}>{ingredient['amount']} {ingredient['name']}</List.Item>  //add ingredient vendor cross-ref here
+                  ))}
+                </List>
+              </Grid.Column>
+
+              <Grid.Column textAlign='center'>
+                <Grid.Row>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                </Grid.Row>
+                <Grid.Row>
+                  <Header as='h3'>Ready In</Header>
+                  {this.props.recipe.time} minutes
+                </Grid.Row>
+                <Grid.Row>
+                  <br></br>
+                </Grid.Row>
+                <Grid.Row>
+                  <Header as='h3'>Number of Servings</Header>
+                  {this.props.recipe.servings}
+                </Grid.Row>
+              </Grid.Column>
+
+              <Grid.Column>
+                <Image src={this.props.recipe.image} size="medium" circular/>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Header as='h2'>Directions</Header>
+            </Grid.Row>
+            <Grid.Row>
+              {this.props.recipe.directions.map((step, idx) => (
+                  <p>{idx + 1}) { step}</p>
               ))}
-            </List>
-          </div>
-          <div>
-            <Header as='h3'>Directions</Header>
-            {this.props.recipe.directions.map((step, idx) => (
-                <p>{idx + 1}){step}</p>
-            ))}
-          </div>
+            </Grid.Row>
+          </Grid>
         </Container>
     );
   }

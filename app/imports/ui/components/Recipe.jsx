@@ -8,7 +8,7 @@ class Recipe extends React.Component {
   render() {
     return (
           <Card href = {`/#/viewrecipe/${this.props.recipe._id}`} >
-            <Image src={this.props.recipe.image}/>
+            <Image src={this.props.recipe.image} size = 'medium'/>
             <Card.Content>
               <Card.Header>
                 {this.props.recipe.name}

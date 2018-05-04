@@ -47,7 +47,7 @@ class ListRecipes extends React.Component {
     const { isLoading, value, results } = this.state;
 
     return (
-        <Container cover>
+        <Container>
           <Header as="h1"
                   textAlign="center">Recipe Homepage</Header>
             <Search
