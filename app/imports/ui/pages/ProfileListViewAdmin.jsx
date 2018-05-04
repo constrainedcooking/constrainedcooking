@@ -110,7 +110,7 @@ class ProfileListViewAdmin extends React.Component {
             </Menu.Item>
           </Menu>
           {/* display card for profile */}
-          <ProfileAdmin key={this.state.userProfile._id} user={this.state.userProfile} />;
+          <ProfileAdmin key={this.state.userProfile._id} user={this.state.userProfile} size={'medium'}/>;
         </Container>
     );
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Vendors } from '/imports/api/vendor/vendor';
-import { Grid, Header, Form, Container, Table, Loader } from 'semantic-ui-react';
+import { Grid, Header, Form, Container, Table } from 'semantic-ui-react';
 import { Bert } from 'meteor/themeteorchef:bert';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
@@ -45,20 +45,14 @@ class AddVendorItem extends React.Component {
       if (allItems.some(function (name) { return name.name === itemValue; }) === false) {
         const owner = Meteor.user().username;
         const available = true;
-        const items = {
-          name: this.state.item,
-          price: this.state.price,
-          available: available,
-          vendor: owner,
-          vendorname: this.props.vendoraccount[0].userName,
-        };
+        const items = { name: this.state.item, price: this.state.price, available: available, vendor: owner };
         Vendors.update(
             this.props.vendoraccount[0]._id,
             { $push: { items: items } },
             this.insertCallback,
         );
       } else {
-        Bert.alert({ type: 'danger', message: 'That item already exists, please edit it instead or change the name' });
+        Bert.alert({ type: 'danger', message: 'That item already exists, please edit it instead' });
       }
     }
   }
@@ -70,27 +64,23 @@ class AddVendorItem extends React.Component {
     let allItems = this.props.vendoraccount[0].items;
     allItems = allItems.flatten();
     allItems = _.sortBy(allItems, 'name');
-    const editHeader = { background: 'green', color: 'whitesmoke' };
-    const availHeader = { background: 'turquoise', color: 'whitesmoke' };
-    const priceHeader = { background: 'silver', color: 'whitesmoke' };
-    const nameHeader = { background: 'orange', color: 'whitesmoke' };
     return (
         <Container>
           <Grid container centered columns={2}>
             <Grid.Column>
               <Header as="h2" textAlign="center">Add Vendor Item</Header>
               <Form ref={(ref) => { this.formRef = ref; }} onSubmit={this.handleSubmit}>
-                <Form.Input name="item"
-                            lable="item"
-                            placeholder="item"
-                            onChange={this.handleChange}
-                />
-                <Form.Input name="price"
-                            lable="price"
-                            placeholder="price"
-                            onChange={this.handleChange}
-                />
-                <Form.Button content="Add Item"/>
+                  <Form.Input name="item"
+                              lable="item"
+                              placeholder="item"
+                              onChange={this.handleChange}
+                  />
+                  <Form.Input name="price"
+                              lable="price"
+                              placeholder="price"
+                              onChange={this.handleChange}
+                 />
+                  <Form.Button content="Submit"/>
               </Form>
             </Grid.Column>
           </Grid>
@@ -98,10 +88,10 @@ class AddVendorItem extends React.Component {
           <Table celled>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell style ={nameHeader} textAlign='center'>Name</Table.HeaderCell>
-                <Table.HeaderCell style ={priceHeader} textAlign='center'>Price (U.S Dollars)</Table.HeaderCell>
-                <Table.HeaderCell style ={availHeader} textAlign='center'>Availability</Table.HeaderCell>
-                <Table.HeaderCell style ={editHeader} textAlign='center'>Update Item</Table.HeaderCell>
+                <Table.HeaderCell>Name</Table.HeaderCell>
+                <Table.HeaderCell>Price</Table.HeaderCell>
+                <Table.HeaderCell>Availability</Table.HeaderCell>
+                <Table.HeaderCell>Update Item</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -129,7 +119,7 @@ export default withTracker(() => {
   // Get access to Stuff documents.
   const subscription = Meteor.subscribe('Vendor');
   return {
-    vendoraccount: Vendors.find({ owner: Meteor.user().username }).fetch(),
+    vendoraccount: Vendors.find({}).fetch(),
     ready: subscription.ready(),
   };
 })(AddVendorItem);

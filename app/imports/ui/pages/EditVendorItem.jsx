@@ -1,28 +1,74 @@
 import React from 'react';
-import { Grid, Loader, Header, Segment } from 'semantic-ui-react';
-import { Vendors, VendorSchema } from '/imports/api/vendor/vendor';
+import { Grid, Loader, Header, Form, Button } from 'semantic-ui-react';
+import { Vendors } from '/imports/api/vendor/vendor';
 import { Bert } from 'meteor/themeteorchef:bert';
-import AutoForm from 'uniforms-semantic/AutoForm';
-import TextField from 'uniforms-semantic/TextField';
-import NumField from 'uniforms-semantic/NumField';
-import SubmitField from 'uniforms-semantic/SubmitField';
-import HiddenField from 'uniforms-semantic/HiddenField';
-import ErrorsField from 'uniforms-semantic/ErrorsField';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 /** Renders the Page for editing a single document. */
 class EditVendorItem extends React.Component {
-
-  /** On successful submit, insert the data. */
-  submit(data) {
-    const { name, quantity, condition, _id } = data;
-    Vendors.update(_id, { $set: { item, price, unit } }, (error) => (error ?
-        Bert.alert({ type: 'danger', message: `Update failed: ${error.message}` }) :
-        Bert.alert({ type: 'success', message: 'Update succeeded' })));
+  constructor(props) {
+    super(props);
+    this.state = {
+      item: this.props.itemName,
+      price: this.props.itemPrice,
+      availability: this.props.itemAvail,
+      formerpage: false,
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
-
+  /** On successful submit, insert the data. */
+  handleSubmit() {
+    this.setState({ formerpage: true });
+    let available = true;
+    if (this.state.availability === 'false') {
+      available = false;
+    } else {
+      available = true;
+    }
+    const owner = Meteor.user().username;
+    Vendors.update(
+        this.props.vendorAccount[0]._id,
+        { $pull: { items: { name: this.props.itemName } } }, (error) => (error ?
+            Bert.alert({ type: 'danger', message: `Update failed: ${error.message}` }) :
+            Bert.alert({ type: 'success', message: 'Update succeeded' })),
+    );
+    const items = {
+      name: this.state.item,
+      price: this.state.price,
+      available: available,
+      vendor: owner,
+      vendorname: this.props.vendorAccount[0].userName,
+    };
+    Vendors.update(
+        this.props.vendorAccount[0]._id,
+        { $push: { items: items } }, (error) => (error ?
+        Bert.alert({ type: 'danger', message: `Update failed: ${error.message}` }) :
+        Bert.alert({ type: 'success', message: 'Update succeeded' })),
+    );
+   /* Vendors.update(
+        { _id: this.props.vendorAccount[0]._id, 'items.name': this.props.itemName },
+        { $set: { 'items.$.name': name, 'items.$.price': price, 'items.$.available': available } }, (error) => (error ?
+        Bert.alert({ type: 'danger', message: `Update failed: ${error.message}` }) :
+        Bert.alert({ type: 'success', message: 'Update succeeded' })),
+    ); */
+  }
+  handleChange(e, { name, value }) {
+    this.setState({ [name]: value });
+  }
+  onClick() {
+    this.setState({ formerpage: true });
+    Vendors.update(
+        this.props.vendorAccount[0]._id,
+        { $pull: { items: { name: this.props.itemName } } }, (error) => (error ?
+            Bert.alert({ type: 'danger', message: `Delete failed: ${error.message}` }) :
+            Bert.alert({ type: 'success', message: 'Delete succeeded' })),
+      );
+    }
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader>Getting data</Loader>;
@@ -30,41 +76,68 @@ class EditVendorItem extends React.Component {
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   renderPage() {
+    if (this.state.formerpage === true) {
+        return <Redirect to={'/addvendoritem'}/>;
+    }
+    const availableOptions = [
+      { key: 1, text: 'available', value: 'true' },
+      { key: 2, text: 'not available', value: 'false' },
+    ];
     return (
-        <Grid container centered>
+        <Grid container centered columns={2}>
           <Grid.Column>
-            <Header as="h2" textAlign="center">Edit Vendor Item</Header>
-            <AutoForm schema={VendorSchema} onSubmit={this.submit} model={this.props.doc}>
-              <Segment>
-                <TextField name='item'/>
-                <NumField name='price' decimal={true}/>
-                <TextField name='unit'/>
-                <SubmitField value='Submit'/>
-                <ErrorsField/>
-                <HiddenField name='owner' />
-              </Segment>
-            </AutoForm>
+            <Header as="h2" textAlign="center">Edit Item</Header>
+            <Form ref={(ref) => { this.formRef = ref; }} onSubmit={this.handleSubmit}>
+              <Form.Input name="item"
+                          lable="item"
+                          placeholder="item"
+                          defaultValue={this.props.itemName}
+                          onChange={this.handleChange}
+              />
+              <Form.Input name="price"
+                          lable="price"
+                          placeholder="price"
+                          defaultValue={this.props.itemPrice}
+                          onChange={this.handleChange}
+              />
+              <Form.Select name="availability"
+                           options={availableOptions}
+                           label="availability"
+                           placehold='users'
+                           onChange={this.handleChange}
+              />
+              <Form.Button content="Update item"/>
+            </Form>
+          </Grid.Column>
+          <Grid.Column>
+            <Header as="h2" textAlign="center">Delete Item</Header>
+            <Button onClick = {this.onClick} color='red' size='huge'>delete item</Button>
           </Grid.Column>
         </Grid>
     );
   }
 }
 
-/** Require the presence of a Stuff document in the props object. Uniforms adds 'model' to the props, which we use. */
 EditVendorItem.propTypes = {
-  doc: PropTypes.object,
-  model: PropTypes.object,
+  vendorAccount: PropTypes.array.isRequired,
+  itemName: PropTypes.string.isRequired,
+  itemPrice: PropTypes.string.isRequired,
+  itemAvail: PropTypes.string.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
-/** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
+/** Require the presence of a Stuff document in the props object. Uniforms adds 'model' to the props, which we use. */
 export default withTracker(({ match }) => {
-  // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
-  const documentId = match.params._id;
   // Get access to Stuff documents.
   const subscription = Meteor.subscribe('Vendor');
+  const documentId = match.params._id;
+  console.log('fuck', documentId);
+  const vendorFields = documentId.split('_');
   return {
-    doc: Vendors.findOne(documentId),
+    vendorAccount: Vendors.find({ owner: Meteor.user().username }).fetch(),
+    itemName: vendorFields[0],
+    itemPrice: vendorFields[1],
+    itemAvail: vendorFields[2],
     ready: subscription.ready(),
   };
 })(EditVendorItem);

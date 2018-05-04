@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button, Icon } from 'semantic-ui-react';
+import { Table, Button } from 'semantic-ui-react';
 import { Vendors } from '/imports/api/vendor/vendor';
 import PropTypes from 'prop-types';
 import { Bert } from 'meteor/themeteorchef:bert';
@@ -11,23 +11,25 @@ class VendorItem extends React.Component {
     super(props);
     this.state = {
       visitVendor: false,
-      _id: '',
+      itemname: '',
+      price: '',
+      available: '',
     };
     this.onClick = this.onClick.bind(this);
   }
   onClick() {
-    const userProfile = Vendors.find({ owner: this.props.vendor.vendor }).fetch();
-    // console.log('vendoritem', userProfile);
-    if (userProfile[0] !== undefined) {
       this.setState({ visitVendor: true });
-      this.setState({ _id: userProfile[0]._id });
-    } else {
-      Bert.alert({ type: 'danger', message: 'That user does not exist' });
+      this.setState({ itemname: this.props.vendor.name });
+      this.setState({ price: this.props.vendor.price });
+      if (this.props.vendor.available) {
+        this.setState({ available: 'true' });
+      } else {
+        this.setState({ available: 'false' });
+      }
     }
-  }
   render() {
     if (this.state.visitVendor === true) {
-      return <Redirect to={`/vendorview/${this.state._id}`}/>;
+      return <Redirect to={`/vendoredit/${this.state.itemname}_${this.state.price}_${this.state.available}`}/>;
     }
     const availableStyle = { color: 'blue' };
     const notavailableStyle = { color: 'red' };
@@ -40,17 +42,9 @@ class VendorItem extends React.Component {
           ) : (
               <Table.Cell style={notavailableStyle}>Not Available</Table.Cell>
           )}
-          {this.props.showvendor === true ? (
               <Table.Cell>
-                <Button animated onClick = {this.onClick} color='green'>
-                  <Button.Content visible>{this.props.vendor.vendorname}</Button.Content>
-                  <Button.Content hidden>
-                    <Icon name='right arrow' />
-                  </Button.Content>
-                </Button>
+                <Button basic onClick = {this.onClick} >Edit</Button>
               </Table.Cell>
-          ) : ''
-          }
         </Table.Row>
     );
   }
@@ -59,7 +53,6 @@ class VendorItem extends React.Component {
 /** Require a document to be passed to this component. */
 VendorItem.propTypes = {
   vendor: PropTypes.object.isRequired,
-  showvendor: PropTypes.bool.isRequired,
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */

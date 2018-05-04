@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
@@ -29,14 +28,18 @@ class NavBar extends React.Component {
         <Menu.Item>
           <Dropdown item text='Vendors'>
             <Dropdown.Menu>
-              <Dropdown.Item as = {NavLink} activeClassName = "" exact to ="/listvendor">Home</Dropdown.Item>
-              <Dropdown.Item as = {NavLink} activeClassName = "" exact to ="/addvendoritem">Add Item</Dropdown.Item>
-              <Dropdown.Item>Others</Dropdown.Item>
+              <Dropdown.Item as = {NavLink} activeClassName = "" exact to ="/listvendor">
+                Search for a vendor
+              </Dropdown.Item>
+              <Dropdown.Item as = {NavLink} activeClassName = "" exact to ="/listAllvendors">View all Items</Dropdown.Item>
+              {Roles.userIsInRole(Meteor.userId(), 'vendor') ? (
+                <Dropdown.Item as = {NavLink} activeClassName = "" exact to ="/addvendoritem">Add/Update Items</Dropdown.Item>
+                  ) : ''}
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Item>
-        {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
-            <Menu.Item as={NavLink} activeClassName="active" exact to="/admin" key='admin'>Admin</Menu.Item>
+        {Roles.userIsInRole(Meteor.userId(), 'vendor') ? (
+            [<Menu.Item as={NavLink} activeClassName = "" exact to ="/addvendoritem" key='add'>Add/Update Items</Menu.Item>]
         ) : ''}
         <Menu.Item position = "right">
           {this.props.currentUser === '' ? (
