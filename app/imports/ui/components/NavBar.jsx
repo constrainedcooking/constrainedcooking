@@ -6,7 +6,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { withRouter, NavLink } from 'react-router-dom';
 import { Menu, Dropdown, Header, Search, Label } from 'semantic-ui-react';
 import { Roles } from 'meteor/alanning:roles';
-import SearchBar from '../components/SearchBar';
+
 
 
 /** The NavBar appears at the top of every page. Rendered by the App Layout component. */
@@ -38,10 +38,7 @@ class NavBar extends React.Component {
         {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
             <Menu.Item as={NavLink} activeClassName="active" exact to="/admin" key='admin'>Admin</Menu.Item>
         ) : ''}
-        <Menu.Item position="right">
-          <SearchBar/>
-        </Menu.Item>
-        <Menu.Item>
+        <Menu.Item position = "right">
           {this.props.currentUser === '' ? (
               <Dropdown text="Login" pointing="top right" icon={'user'}>
                 <Dropdown.Menu>
